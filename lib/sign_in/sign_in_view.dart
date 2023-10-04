@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Student_Profile_Page/student_ProfilePage.dart';
 /// Presents the page containing fields to enter a username and password, plus buttons.
 class SigninView extends StatefulWidget {
   const SigninView({Key? key}) : super(key: key);
@@ -58,7 +59,7 @@ class _SigninViewState extends State<SigninView> {
             ElevatedButton(
                 onPressed: () {
                   // Eventually: pushReplacementNamed
-                  Navigator.pushReplacementNamed(context, '/home');
+                  Navigator.pushReplacementNamed(context, '/StudentProfile');
                 },
                 child: const Text('Sign in')),
             const SizedBox(height: 12.0),
