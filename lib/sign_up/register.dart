@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import '../Student_Profile_Page/student_ProfilePage.dart';
-/// Presents the page containing fields to enter a username and password, plus buttons.
-class SigninView extends StatefulWidget {
-  const SigninView({Key? key}) : super(key: key);
 
-  static const routeName = '/';
+class SignUpPage extends StatefulWidget{
+  const SignUpPage({Key? key}) : super(key: key);
+
+  static const routeName = "/signup";
 
   @override
-  State<SigninView> createState() => _SigninViewState();
+  State<SignUpPage> createState() => SignUpViewState();
 }
 
-class _SigninViewState extends State<SigninView> {
+class SignUpViewState extends State<SignUpPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _first_name = TextEditingController();
+  final _last_name = TextEditingController();
+  final _age = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,24 @@ class _SigninViewState extends State<SigninView> {
                 const SizedBox(height: 16.0),
               ],
             ),
-            const SizedBox(height: 120.0),
+            TextField(
+              controller: _first_name,
+              decoration: const InputDecoration(
+                labelText: 'First Name',
+              ),
+            ),
+            TextField(
+              controller: _last_name,
+              decoration: const InputDecoration(
+                labelText: 'Last Name',
+              ),
+            ),
+            TextField(
+              controller: _age,
+              decoration: const InputDecoration(
+                labelText: 'age',
+              ),
+            ),
             // [Name]
             TextField(
               controller: _emailController,
@@ -40,7 +59,6 @@ class _SigninViewState extends State<SigninView> {
                 labelText: 'Email',
               ),
             ),
-            const SizedBox(height: 12.0),
             TextField(
               controller: _passwordController,
               decoration: const InputDecoration(
@@ -48,31 +66,13 @@ class _SigninViewState extends State<SigninView> {
               ),
               obscureText: true,
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {},
-                child: const Text('Forgot Password?'),
-              ),
-            ),
-            const SizedBox(height: 12.0),
+            const SizedBox(height: 100,),
             ElevatedButton(
                 onPressed: () {
                   // Eventually: pushReplacementNamed
                   Navigator.pushReplacementNamed(context, '/StudentProfile');
                 },
-                child: const Text('Sign in')),
-            const SizedBox(height: 12.0),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const Text("Don't have an account? "),
-              TextButton(
-                child: const Text('Sign up'),
-                onPressed: () {
-                  // Eventually: pushReplacementNamed
-                  Navigator.pushNamed(context, '/SignUp');
-                },
-              )
-            ]),
+                child: const Text('Register')),
           ],
         ),
       ),
