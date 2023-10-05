@@ -11,6 +11,23 @@ class Bottombar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<Bottombar> {
+  int _selectedIndex = 0;
+
+  void _onTabChanged(int index) {
+    setState(() {
+      _selectedIndex = index;
+      switch (index) {
+        case 0:
+          Navigator.pushNamed(context, '/StudentProfile');
+          break;
+        case 2:
+          Navigator.pushNamed(context, '/LiveActivity');
+          break;
+      // Add more cases for other tabs if needed...
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -39,7 +56,7 @@ class _BottomBarState extends State<Bottombar> {
       currentIndex: widget.selectedIndex,
       selectedItemColor: Colors.blue,
       unselectedItemColor: Colors.grey,
-      onTap: widget.onTabChanged, // Use the provided callback function
+      onTap: _onTabChanged, // Use the provided callback function
     );
   }
 }
