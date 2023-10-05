@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Components/bottom_navigation_bar.dart';
+import '../Course/course.dart';
 
 class StudentProfilePage extends StatefulWidget {
   @override
@@ -61,18 +62,37 @@ class _StudentProfilePageState extends State<StudentProfilePage> {
                   InkWell(
                     onTap: () {
                       // Handle course click action
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CoursePage('Introduction to Programming'),
+                        ),
+                      );
                     },
                     child: CourseItem('Introduction to Programming', Colors.green),
                   ),
                   InkWell(
                     onTap: () {
                       // Handle course click action
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CoursePage('Data Structures and Algorithms'),
+                        ),
+                      );
+
                     },
                     child: CourseItem('Data Structures and Algorithms', Colors.orange),
                   ),
                   InkWell(
                     onTap: () {
                       // Handle course click action
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CoursePage('Mobile App Development'),
+                        ),
+                      );
                     },
                     child: CourseItem('Mobile App Development', Colors.blue),
                   ),
