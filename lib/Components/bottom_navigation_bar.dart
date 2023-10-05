@@ -23,6 +23,9 @@ class _BottomBarState extends State<Bottombar> {
         case 2:
           Navigator.pushNamed(context, '/LiveActivity');
           break;
+        case 3:
+          Navigator.pushNamed(context, '/Messages');
+          break;
       // Add more cases for other tabs if needed...
       }
     });
