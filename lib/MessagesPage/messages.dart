@@ -1,55 +1,46 @@
 import 'package:flutter/material.dart';
 
-class MessagesPage extends StatelessWidget {
+
+class ChatScreen extends StatefulWidget {
+  @override
+  _ChatScreenState createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  final List<Message> messages = [
+    Message('User 1', 'Hello!', 'https://placekitten.com/50/50'),
+    Message('User 2', 'Hi there!', 'https://placekitten.com/49/49'),
+    Message('User 3', 'How are you?', 'https://placekitten.com/48/48'),
+    Message('User 4', 'Good Morning!', 'https://placekitten.com/47/47'),
+    Message('User 5', 'Have a nice day!', 'https://placekitten.com/46/46'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Messages'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Messages Page Specification',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
+      body: ListView.builder(
+        itemCount: messages.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(messages[index].avatarUrl),
             ),
-            Text(
-              'Goal',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Allowing students to interact with eachother',
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
-            Text(
-              'Feature',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Automaticaly creates a group communication for courses and clubs to enable instant messaging among participants',
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
-          ],
-        ),
+            title: Text(messages[index].username),
+            subtitle: Text(messages[index].text),
+          );
+        },
       ),
     );
   }
+}
+
+class Message {
+  final String username;
+  final String text;
+  final String avatarUrl;
+
+  Message(this.username, this.text, this.avatarUrl);
 }
