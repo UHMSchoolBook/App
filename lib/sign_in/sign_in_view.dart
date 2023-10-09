@@ -69,7 +69,7 @@ class _SigninViewState extends State<SigninView> {
                 child: const Text('Sign up'),
                 onPressed: () {
                   // Eventually: pushReplacementNamed
-                  Navigator.pushNamed(context, '/signup');
+                  Navigator.pushNamed(context, '/register');
                 },
               )
             ]),
