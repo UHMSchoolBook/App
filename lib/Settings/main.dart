@@ -1,4 +1,5 @@
 
+import 'package:connect_people/Register/register.dart';
 import 'package:flutter/material.dart';
 import '../sign_in/sign_in_view.dart';
 import '../Student_Profile_Page/student_ProfilePage.dart';
@@ -6,7 +7,9 @@ import '../Feed/feed.dart';
 import '../MarketPlacePage/marketplace.dart';
 import '../Components/appwrapper.dart';
 import '../MessagesPage/messages.dart';
-import '../LivePage/livepage.dart';// Import your CustomBottomNavigationBar
+import '../LivePage/livepage.dart';
+import '../Register/register.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -17,6 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: {
     '/': (context) => SigninView(),
+    '/register': (context) => SignUpPage(),
         '/StudentProfile': (context) => AppWrapper(
           initialIndex: 0,
           pages: [
