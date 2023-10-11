@@ -5,9 +5,9 @@ import '../data_model/user_db.dart';
 import '../data_model/courses_db.dart';
 import '../data_model/groups_db.dart';
 
-UserData data = userDB.getUser("user-001");
-List<String> classes = classDB.getClassesForStudent('user-001');
-List<String> groups = groupDB.getGroupForStudent('user-001');
+UserData data = userDB.getUser(currentUserID);
+List<String> classes = classDB.getClassesForStudent(currentUserID);
+List<String> groups = groupDB.getGroupForStudent(currentUserID);
 class StudentProfilePage extends StatefulWidget {
   @override
   _StudentProfilePageState createState() => _StudentProfilePageState();
