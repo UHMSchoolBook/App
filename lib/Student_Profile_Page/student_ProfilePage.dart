@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import '../Components/bottom_navigation_bar.dart';
 import '../Feed/feed.dart';
+import '../data_model/user_db.dart';
+import '../data_model/courses_db.dart';
+import '../data_model/groups_db.dart';
 
+UserData data = userDB.getUser("user-001");
+List<String> classes = classDB.getClassesForStudent('user-001');
+List<String> groups = groupDB.getGroupForStudent('user-001');
 class StudentProfilePage extends StatefulWidget {
   @override
   _StudentProfilePageState createState() => _StudentProfilePageState();
@@ -38,7 +44,7 @@ class _StudentProfilePageState extends State<StudentProfilePage> {
                     ),
                   ),
                   Text(
-                    'I am a computer science student with a passion for programming and technology.',
+                    data.bio,
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
@@ -63,19 +69,13 @@ class _StudentProfilePageState extends State<StudentProfilePage> {
                     onTap: () {
                       // Handle course click action
                     },
-                    child: CourseItem('Introduction to Programming', Colors.green),
+                    child: CourseItem(classes[0], Colors.green),
                   ),
                   InkWell(
                     onTap: () {
                       // Handle course click action
                     },
-                    child: CourseItem('Data Structures and Algorithms', Colors.orange),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      // Handle course click action
-                    },
-                    child: CourseItem('Mobile App Development', Colors.blue),
+                    child: CourseItem(classes[1], Colors.orange),
                   ),
                 ],
               ),
@@ -97,13 +97,13 @@ class _StudentProfilePageState extends State<StudentProfilePage> {
                     onTap: () {
                       // Handle group click action
                     },
-                    child: GroupItem('Programming Club', Colors.red),
+                    child: GroupItem(groups[0], Colors.red),
                   ),
                   InkWell(
                     onTap: () {
                       // Handle group click action
                     },
-                    child: GroupItem('Study Group', Colors.purple),
+                    child: GroupItem(groups[1], Colors.purple),
                   ),
                 ],
               ),
@@ -174,12 +174,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   SizedBox(width: 8.0),
                   CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/ProfilePic.png'), // Profile picture
+                    backgroundImage: NetworkImage(data.imagePath), // Profile picture
                     radius: 50,
                   ),
                   SizedBox(width: 8.0),
                   Text(
-                    'John', // User's name
+                    data.name, // User's name
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
