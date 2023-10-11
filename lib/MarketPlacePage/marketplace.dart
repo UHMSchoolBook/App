@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../data_model/marketplace_db.dart';
+import '../data_model/housesharing_db.dart';
 
 class MarketplacePage extends StatelessWidget {
   @override
@@ -10,7 +12,7 @@ class MarketplacePage extends StatelessWidget {
           leading: Builder(
             builder: (BuildContext context) {
               return IconButton(
-                icon: Icon(Icons.menu), // Burger menu icon
+                icon: Icon(Icons.menu),
                 onPressed: () {
                   Scaffold.of(context).openDrawer();
                 },
@@ -39,12 +41,16 @@ class MarketplacePage extends StatelessWidget {
 class SaleTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        MarketplaceItem('Item 1', 'Description of item 1', 'A', '20 USD'),
-        MarketplaceItem('Item 2', 'Description of item 2', 'B', '50 USD'),
-        MarketplaceItem('Item 3', 'Description of item 3', 'C', '30 USD'),
-      ],
+    return ListView.builder(
+      itemCount: marketDB.items.length,
+      itemBuilder: (context, index) {
+        return MarketplaceItem(
+          marketDB.items[index].name,
+          marketDB.items[index].student_id,
+          marketDB.items[index].price,
+          marketDB.items[index].imagePath,
+        );
+      },
     );
   }
 }
@@ -52,42 +58,47 @@ class SaleTab extends StatelessWidget {
 class HouseSharingTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        MarketplaceItem('House 1', 'Description of house 1', 'D', '500 USD/month'),
-        MarketplaceItem('House 2', 'Description of house 2', 'E', '600 USD/month'),
-        MarketplaceItem('House 3', 'Description of house 3', 'F', '550 USD/month'),
-      ],
+    return ListView.builder(
+      itemCount: houseDB.rooms.length,
+      itemBuilder: (context, index) {
+        return MarketplaceItem(
+          houseDB.rooms[index].location,
+          houseDB.rooms[index].student_id,
+          houseDB.rooms[index].rent,
+          houseDB.rooms[index].imagePath,
+        );
+      },
     );
-  }
+}
 }
 
 class MarketplaceItem extends StatelessWidget {
   final String title;
-  final String description;
   final String author;
   final String price;
+  final String imagePath;
 
-  MarketplaceItem(this.title, this.description, this.author, this.price);
+  MarketplaceItem(this.title, this.author, this.price, this.imagePath);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(10),
       child: ListTile(
-        leading: CircleAvatar(
-          // Display author's avatar
-          backgroundImage: AssetImage('assets/avatar.png'),
-        ),
         title: Text(title),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(description),
             SizedBox(height: 15),
             Text('Posted by: $author'),
             Text('Price: $price'),
           ],
+        ),
+        trailing: Image.network(
+          imagePath,
+          width: 50,
+          height: 50,
+          fit: BoxFit.cover,
         ),
       ),
     );
