@@ -1,22 +1,6 @@
 import 'package:flutter/material.dart';
-
-class Person {
-  final String name;
-  final String songImageUrl;
-  final String major;
-  final String gender;
-  final String distance;
-  final String imageUrl;
-
-  Person({
-    required this.name,
-    required this.songImageUrl,
-    required this.major,
-    required this.gender,
-    required this.distance,
-    required this.imageUrl,
-  });
-}
+// Assume LiveDB and LiveData are defined in live_db.dart
+import '../data_model/live_db.dart';
 
 class LiveActivityPage extends StatefulWidget {
   @override
@@ -25,14 +9,10 @@ class LiveActivityPage extends StatefulWidget {
 
 class _LiveActivityPageState extends State<LiveActivityPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  List<String> _tabs = ['Songs', 'Movies', 'Games', 'Books', 'Events'];
-  List<Person> _people = [
-    Person(name: 'Philip', songImageUrl: 'https://i.ytimg.com/vi/xXD5tltX9Pg/maxresdefault.jpg', major: 'CS', gender: 'Male', distance: '2 km', imageUrl: 'https://raw.githubusercontent.com/philipmjohnson/philipmjohnson.github.io/main/img/pmj-headshot.png'),
-    Person(name: 'Sara', songImageUrl: 'https://www.moroccoworldnews.com/wp-content/uploads/2022/12/this-time-for-africa-shakira-celebrates-moroccos-win-800x450.jpeg', major: 'Physics', gender: 'Female', distance: '5 km', imageUrl: 'https://cdn.britannica.com/47/188647-050-396A58A5/Sarah-Silverman-2011.jpg'),
-    Person(name: 'Armin', songImageUrl: 'https://m.media-amazon.com/images/M/MV5BMTM2NzE1YTEtNTNjZC00MTg5LTkwOTEtNDEwMDI1ODA1YjhkXkEyXkFqcGdeQXVyNjU0ODAyOTY@._V1_.jpg', major: 'CS', gender: 'Male', distance: '1 km', imageUrl: "https://hawaiidigitalhealthlab.com/content/images/2023/06/armin.jpeg"),
-    Person(name: "Rahat", songImageUrl: "https://upload.wikimedia.org/wikipedia/en/d/d6/Lose_Yourself.jpg", major: "math", gender: 'Male', distance: '5 km', imageUrl: "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=DRMNtvMAAAAJ&citpid=2"),
-    // Add other people here
-  ];
+  // Using tabs directly from liveDB instance.
+  List<String> _tabs = liveDB.tabs;
+  // Using the lives data from liveDB instance.
+  List<LiveData> _people = liveDB.lives;
 
   @override
   void initState() {
@@ -48,6 +28,7 @@ class _LiveActivityPageState extends State<LiveActivityPage> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
+    // Remaining Flutter UI code, unmodified...
     return Scaffold(
       appBar: AppBar(
         title: Text('Live Activity'),
@@ -70,9 +51,9 @@ class _LiveActivityPageState extends State<LiveActivityPage> with SingleTickerPr
               return ListTile(
                 leading: Image.network(
                   _people[index].songImageUrl,
-                  width: 50,  // you can adjust the width as you need
-                  height: 50, // and also the height
-                  fit: BoxFit.cover,  // this is to ensure that the image scales correctly
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
                 ),
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +77,6 @@ class _LiveActivityPageState extends State<LiveActivityPage> with SingleTickerPr
               );
             },
           );
-
         }).toList(),
       ),
     );
