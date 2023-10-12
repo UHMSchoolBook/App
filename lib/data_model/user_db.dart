@@ -24,32 +24,32 @@ class UserDB {
         name: 'Rahat',
         email: 'rahat@gmail.com',
         imagePath: 'https://scholar.googleusercontent.com/citations?view_op=view_photo&user=DRMNtvMAAAAJ&citpid=2',
-        bio: 'I am a computer science masters student at UHM'),
+        bio: 'I am a computer science masters student at UHManoa'),
     UserData(
         id: 'user-002',
         name: 'Armin',
         email: 'armin@gmail.com',
         imagePath: 'https://hawaiidigitalhealthlab.com/content/images/2023/06/armin.jpeg',
-        bio: 'I am passionate about programming'),
+        bio: 'I am passionate about mobile application development'),
     UserData(
         id: 'user-003',
         name: 'John',
         email: 'john@gmail.com',
         imagePath: 'https://raw.githubusercontent.com/philipmjohnson/philipmjohnson.github.io/main/img/pmj-headshot.png',
-        bio: 'I am passionate about mobile apps'),
+        bio: 'I am passionate about teaching people about mobile apps'),
   ];
 
   UserData getUser(String userID) {
     return _users.firstWhere((userData) => userData.id == userID);
   }
 
-  List<UserData> getUsers(List<String> userIDs) {
-    return _users.where((userData) => userIDs.contains(userData.id)).toList();
+  String getUserName(String userID) {
+    return _users.firstWhere((userData) => userData.id == userID).name;
   }
 
-  // Return the userIDs of users who are in the same Chapter(s) as [userID].
-  // First, get all of the chapterIDs that this [userID] is associated with.
-  // Then build the set of all userIDs associated with the chapterIDs.
+  String getUserImagePath(String userID) {
+    return _users.firstWhere((userData) => userData.id == userID).imagePath;
+  }
 
 }
 
