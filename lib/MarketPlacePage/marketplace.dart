@@ -90,15 +90,15 @@ class MarketplaceItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 15),
+            SizedBox(height: 20),
             Text('Posted by: ${userDB.getUserName(author)}'),
             Text('Price: $price'),
           ],
         ),
         trailing: Image.network(
           imagePath,
-          width: 50,
-          height: 50,
+          width: 60,
+          height: 60,
           fit: BoxFit.cover,
         ),
       ),

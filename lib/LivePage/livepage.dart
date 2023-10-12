@@ -31,13 +31,22 @@ class _LiveActivityPageState extends State<LiveActivityPage> with SingleTickerPr
     // Remaining Flutter UI code, unmodified...
     return Scaffold(
       appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
+        ),
         title: Text('Live Activity'),
-        centerTitle: true,
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
-          indicatorColor: Colors.blue,
-          labelColor: Colors.blue,
+          indicatorColor: Colors.white,
+          labelColor: Colors.white,
           unselectedLabelColor: Colors.grey,
           tabs: _tabs.map((tab) => Tab(text: tab)).toList(),
         ),
