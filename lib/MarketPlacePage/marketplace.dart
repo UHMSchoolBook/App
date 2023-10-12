@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data_model/marketplace_db.dart';
 import '../data_model/housesharing_db.dart';
+import '../data_model/user_db.dart';
 
 class MarketplacePage extends StatelessWidget {
   @override
@@ -90,7 +91,7 @@ class MarketplaceItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 15),
-            Text('Posted by: $author'),
+            Text('Posted by: ${userDB.getUserName(author)}'),
             Text('Price: $price'),
           ],
         ),

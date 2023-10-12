@@ -35,11 +35,12 @@ class _StudentProfilePageState extends State<StudentProfilePage> {
               color: Colors.lightGreen, // Color for bio section
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Text(
                     'Bio:',
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
