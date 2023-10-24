@@ -1,6 +1,7 @@
 
 import 'package:connect_people/Register/register.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../sign_in/sign_in_view.dart';
 import '../Student_Profile_Page/student_ProfilePage.dart';
 import '../Feed/feed.dart';
@@ -9,20 +10,30 @@ import '../Components/appwrapper.dart';
 import '../MessagesPage/messages.dart';
 import '../LivePage/livepage.dart';
 import '../Register/register.dart';
+import '../Settings/settings_page.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+
+
+class MyApp extends ConsumerWidget {
+
+  final selectedIndexProvider = StateProvider<int>((ref) => 0);
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeProvider);
     return MaterialApp(
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: themeMode,
       routes: {
     '/': (context) => SigninView(),
     '/register': (context) => SignUpPage(),
+        '/settings': (context) => SettingsPage(),
         '/StudentProfile': (context) => AppWrapper(
-          initialIndex: 0,
           pages: [
             StudentProfilePage(),
             FeedPage(),
@@ -32,7 +43,6 @@ class MyApp extends StatelessWidget {
           ],
         ),
         '/feed': (context) => AppWrapper(
-          initialIndex: 1,
           pages: [
             StudentProfilePage(),
             FeedPage(),
@@ -42,7 +52,6 @@ class MyApp extends StatelessWidget {
           ],
         ),
         '/live': (context) => AppWrapper(
-          initialIndex: 2,
           pages: [
             StudentProfilePage(),
             FeedPage(),
@@ -52,7 +61,6 @@ class MyApp extends StatelessWidget {
           ],
         ),
         '/messages': (context) => AppWrapper(
-          initialIndex: 3,
           pages: [
             StudentProfilePage(),
             FeedPage(),
@@ -62,7 +70,6 @@ class MyApp extends StatelessWidget {
           ],
         ),
         '/marketplace': (context) => AppWrapper(
-          initialIndex: 4,
           pages: [
             StudentProfilePage(),
             FeedPage(),
