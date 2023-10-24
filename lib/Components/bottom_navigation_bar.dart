@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CustomBottomNavigationBar extends StatelessWidget {
+class CustomBottomNavigationBar extends ConsumerWidget {
   final int selectedIndex;
-  final ValueChanged<int> onTabChanged;
+  final Function(int) onTabChanged;
 
-  CustomBottomNavigationBar({
-    required this.selectedIndex,
-    required this.onTabChanged,
-  });
-
+  CustomBottomNavigationBar({required this.selectedIndex, required this.onTabChanged});
+  onTabTapped(int index) {
+    onTabChanged(index);
+  }
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
@@ -37,7 +37,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
       currentIndex: selectedIndex,
       selectedItemColor: Colors.blue,
       unselectedItemColor: Colors.grey,
-      onTap: onTabChanged,
+      onTap: onTabTapped,
     );
   }
 }
