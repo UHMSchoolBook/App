@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data_model/user_db.dart';
 import '../data_model/coursefeed_db.dart';
 import '../data_model/clubfeed_db.dart';
+import 'package:connect_people/Feed/edit_feed.dart';
+import 'package:connect_people/Feed/edit_cfeed.dart';
 
 class FeedPage extends StatelessWidget {
   @override
@@ -10,18 +13,7 @@ class FeedPage extends StatelessWidget {
       length: 2, // Number of tabs
       child: Scaffold(
         appBar: AppBar(
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: Icon(Icons.menu), // Burger menu icon
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              );
-            },
-          ),
-          title: Text('Feed'),
-          bottom: TabBar(
+          title: TabBar(
             tabs: [
               Tab(text: 'Courses'),
               Tab(text: 'Clubs'),
@@ -39,44 +31,87 @@ class FeedPage extends StatelessWidget {
   }
 }
 
-class CoursesTab extends StatelessWidget {
+class CoursesTab extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: coursefeedDB.feeds.length,
-      itemBuilder: (context, index) {
-        return FeedItem(
-          coursefeedDB.feeds[index].course_name,
-          coursefeedDB.feeds[index].post,
-          coursefeedDB.feeds[index].student_id,
-        );
-      },
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentUserID = ref.watch(currentUserIDProvider.notifier).state?? '';
+    final courseDB = ref.watch(CourseFeedDBProvider);
+    return Scaffold(
+      body: ListView.builder(
+        itemCount: courseDB.feeds.length,
+        itemBuilder: (context, index) {
+          return FeedItem(
+            feedId: courseDB.feeds[index].feed_id,
+            title: courseDB.feeds[index].course_name,
+            content: courseDB.feeds[index].post,
+            author: courseDB.feeds[index].student_id,
+            isCourseFeed: true,
+            currentUserId: currentUserID,
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => EditFeedPage(),
+          ));
+        },
+      ),
     );
   }
 }
 
-class ClubsTab extends StatelessWidget {
+
+class ClubsTab extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: clubfeedDB.cfeeds.length,
-      itemBuilder: (context, index) {
-        return FeedItem(
-          clubfeedDB.cfeeds[index].club_name,
-          clubfeedDB.cfeeds[index].post,
-          clubfeedDB.cfeeds[index].student_id,
-        );
-      },
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentUserID = ref.watch(currentUserIDProvider.notifier).state?? '';
+    final clubDB = ref.watch(ClubFeedDBProvider);
+    return Scaffold(
+      body: ListView.builder(
+        itemCount: clubDB.cfeeds.length,
+        itemBuilder: (context, index) {
+          return FeedItem(
+            feedId: clubDB.cfeeds[index].feed_id,
+            title: clubDB.cfeeds[index].club_name,
+            content: clubDB.cfeeds[index].post,
+            author: clubDB.cfeeds[index].student_id,
+            isCourseFeed: false,
+            currentUserId: currentUserID,
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => EditCFeedPage(), // Navigate to the EditCFeedPage when pressed
+          ));
+        },
+      ),
     );
   }
 }
+
+
 
 class FeedItem extends StatelessWidget {
   final String title;
   final String content;
   final String author;
+  final String feedId;
+  final bool isCourseFeed;
+  final String currentUserId; // Add this
 
-  FeedItem(this.title, this.content, this.author);
+  FeedItem({
+    required this.feedId,
+    required this.title,
+    required this.content,
+    required this.author,
+    required this.isCourseFeed,
+    required this.currentUserId, // Add this
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +130,20 @@ class FeedItem extends StatelessWidget {
             Text('Posted by: ${userDB.getUserName(author)}'),
           ],
         ),
+        trailing: (currentUserId == author) ? IconButton( // Check if the current user is the author
+          icon: Icon(Icons.edit),
+          onPressed: () {
+            if (isCourseFeed) {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => EditFeedPage(feedId: feedId),
+              ));
+            } else {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => EditCFeedPage(feedId: feedId),
+              ));
+            }
+          },
+        ) : null, // If not the author, don't show the edit button
       ),
     );
   }

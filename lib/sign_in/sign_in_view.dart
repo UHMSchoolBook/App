@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import '../Student_Profile_Page/student_ProfilePage.dart';
+import '../data_model/user_db.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// Presents the page containing fields to enter a username and password, plus buttons.
-class SigninView extends StatefulWidget {
+class SigninView extends ConsumerWidget {
   const SigninView({Key? key}) : super(key: key);
 
   static const routeName = '/';
 
   @override
-  State<SigninView> createState() => _SigninViewState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _emailController = TextEditingController();
+    final _passwordController = TextEditingController();
 
-class _SigninViewState extends State<SigninView> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -33,7 +30,6 @@ class _SigninViewState extends State<SigninView> {
               ],
             ),
             const SizedBox(height: 120.0),
-            // [Name]
             TextField(
               controller: _emailController,
               decoration: const InputDecoration(
@@ -57,18 +53,27 @@ class _SigninViewState extends State<SigninView> {
             ),
             const SizedBox(height: 12.0),
             ElevatedButton(
-                onPressed: () {
-                  // Eventually: pushReplacementNamed
+              onPressed: () {
+                final userDB = ref.read(userDBProvider);
+                final email = _emailController.text;
+
+                if (userDB.isUserEmail(email)) {
+                  final userID = userDB.getUserIDByEmail(email);
+                  ref.read(currentUserIDProvider.notifier).state = userID;
+
                   Navigator.pushReplacementNamed(context, '/StudentProfile');
-                },
-                child: const Text('Sign in')),
+                } else {
+                  // Handle invalid email (e.g., show an error message)
+                }
+              },
+              child: const Text('Sign in'),
+            ),
             const SizedBox(height: 12.0),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               const Text("Don't have an account? "),
               TextButton(
                 child: const Text('Sign up'),
                 onPressed: () {
-                  // Eventually: pushReplacementNamed
                   Navigator.pushNamed(context, '/register');
                 },
               )

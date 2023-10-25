@@ -1,4 +1,5 @@
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 class CourseFeedData {
   CourseFeedData(
       {required this.feed_id,
@@ -13,6 +14,8 @@ class CourseFeedData {
 }
 
 class CourseFeedDB {
+  CourseFeedDB(this.ref);
+  final ProviderRef<CourseFeedDB> ref;
   final List<CourseFeedData> _feeds = [
     CourseFeedData(
         feed_id: 'feed-001',
@@ -31,6 +34,39 @@ class CourseFeedDB {
         student_id: 'user-003'),
   ];
   List<CourseFeedData> get feeds => _feeds;
+  void addCourseFeed({
+    required String feed_id,
+    required String course_name,
+    required String post,
+    required String student_id,}) {
+    String id = 'feed-${(_feeds.length + 1).toString().padLeft(2, '0')}';
+    CourseFeedData data = CourseFeedData(
+      feed_id: id,
+      course_name: course_name,
+      post: post,
+      student_id: student_id,);
+    _feeds.add(data);
+  }
+
+
+void updateCourseFeed({
+  required String feed_id,
+  required String course_name,
+  required String post,
+  required String student_id,}) {
+  String id = 'feed-${(_feeds.length + 1).toString().padLeft(2, '0')}';
+  _feeds.removeWhere((CourseFeedData) => CourseFeedData.feed_id == feed_id);
+  CourseFeedData data = CourseFeedData(
+    feed_id: id,
+    course_name: course_name,
+    post: post,
+    student_id: student_id,);
+  _feeds.add(data);
 }
-/// The singleton instance providing access to all user data for clients.
-CourseFeedDB coursefeedDB = CourseFeedDB();
+}
+
+
+
+final CourseFeedDBProvider = Provider<CourseFeedDB>((ref) {
+  return CourseFeedDB(ref);
+});

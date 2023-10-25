@@ -1,5 +1,5 @@
 //import 'chapter_db.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// The data associated with users.
 class UserData {
   UserData(
@@ -51,10 +51,20 @@ class UserDB {
     return _users.firstWhere((userData) => userData.id == userID).imagePath;
   }
 
+  bool isUserEmail(String email) {
+    List<String> emails = _users.map((userData) => userData.email).toList();
+    return emails.contains(email);
+  }
+
+  String getUserIDByEmail(String email) {
+    return _users.firstWhere((userData) => userData.email == email).id;
+  }
 }
+
 
 /// The singleton instance providing access to all user data for clients.
 UserDB userDB = UserDB();
 
-String currentUserID = 'user-001';
 
+final userDBProvider = Provider<UserDB>((ref) => UserDB());
+final currentUserIDProvider = StateProvider<String?>((ref) => null);

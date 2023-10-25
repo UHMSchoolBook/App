@@ -10,18 +10,7 @@ class MarketplacePage extends StatelessWidget {
       length: 2, // Number of tabs
       child: Scaffold(
         appBar: AppBar(
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              );
-            },
-          ),
-          title: Text('Marketplace'),
-          bottom: TabBar(
+          title: TabBar(
             tabs: [
               Tab(text: 'Sale'),
               Tab(text: 'House Sharing'),
