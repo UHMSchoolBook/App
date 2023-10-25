@@ -1,31 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../Components/bottom_navigation_bar.dart';
 import '../Feed/feed.dart';
 import '../data_model/user_db.dart';
 import '../data_model/courses_db.dart';
 import '../data_model/groups_db.dart';
 
-UserData data = userDB.getUser(currentUserID);
-List<String> classes = classDB.getClassesForStudent(currentUserID);
-List<String> groups = groupDB.getGroupForStudent(currentUserID);
-class StudentProfilePage extends StatefulWidget {
-  @override
-  _StudentProfilePageState createState() => _StudentProfilePageState();
-}
 
-class _StudentProfilePageState extends State<StudentProfilePage> {
-  int _selectedIndex = 0;
-
-  // Function to update _selectedIndex
-  void _onTabChanged(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+class StudentProfilePage extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentUserID = ref.watch(currentUserIDProvider.notifier).state;
+
+    if (currentUserID == null) {
+      return Scaffold(body: Center(child: Text("No user logged in")));
+    }
+
+    UserData data = userDB.getUser(currentUserID);
+    List<String> classes = classDB.getClassesForStudent(currentUserID);
+    List<String> groups = groupDB.getGroupForStudent(currentUserID);
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: MyAppBar(data: data),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,6 +148,10 @@ class GroupItem extends StatelessWidget {
 
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final UserData data;
+
+  MyAppBar({required this.data});
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -167,13 +166,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             children: [
               Row(
                 children: [
-                  IconButton(
-                    icon: Icon(Icons.menu), // Burger menu icon
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  ),
-                  SizedBox(width: 8.0),
                   CircleAvatar(
                     backgroundImage: NetworkImage(data.imagePath), // Profile picture
                     radius: 50,
