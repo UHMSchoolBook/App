@@ -10,24 +10,9 @@ class ChatScreen extends ConsumerWidget {
     final messages = ref.watch(messageProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          },
-        ),
-        title: Text('Messages'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _showAddMessageDialog(context, ref),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => _showAddMessageDialog(context, ref),
       ),
       body: ListView.builder(
         itemCount: messages.length,
