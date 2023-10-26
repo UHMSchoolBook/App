@@ -1,4 +1,5 @@
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 class ClubFeedData {
   ClubFeedData(
       {required this.feed_id,
@@ -13,6 +14,8 @@ class ClubFeedData {
 }
 
 class ClubFeedDB {
+  ClubFeedDB(this.ref);
+  final ProviderRef<ClubFeedDB> ref;
   final List<ClubFeedData> _cfeeds = [
     ClubFeedData(
         feed_id: 'feed-001',
@@ -31,6 +34,37 @@ class ClubFeedDB {
         student_id: 'user-003'),
   ];
   List<ClubFeedData> get cfeeds => _cfeeds;
+
+  void addClubFeed({
+    required String feed_id,
+    required String club_name,
+    required String post,
+    required String student_id,}) {
+    String id = 'feed-${(_cfeeds.length + 1).toString().padLeft(2, '0')}';
+    ClubFeedData data = ClubFeedData(
+      feed_id: id,
+      club_name: club_name,
+      post: post,
+      student_id: student_id,);
+    _cfeeds.add(data);
+  }
+
+
+  void updateClubFeed({
+    required String feed_id,
+    required String club_name,
+    required String post,
+    required String student_id,}) {
+    String id = 'feed-${(_cfeeds.length + 1).toString().padLeft(2, '0')}';
+    _cfeeds.removeWhere((ClubFeedData) => ClubFeedData.feed_id == feed_id);
+    ClubFeedData data = ClubFeedData(
+      feed_id: id,
+      club_name: club_name,
+      post: post,
+      student_id: student_id,);
+    _cfeeds.add(data);
+  }
 }
-/// The singleton instance providing access to all user data for clients.
-ClubFeedDB clubfeedDB = ClubFeedDB();
+final ClubFeedDBProvider = Provider<ClubFeedDB>((ref) {
+  return ClubFeedDB(ref);
+});

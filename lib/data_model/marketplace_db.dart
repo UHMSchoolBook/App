@@ -1,4 +1,4 @@
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 class MarketData {
   MarketData(
       {required this.item_id,
@@ -15,6 +15,8 @@ class MarketData {
 }
 
 class MarketDB {
+  MarketDB(this.ref);
+  final ProviderRef<MarketDB> ref;
   final List<MarketData> _items = [
     MarketData(
         item_id: 'item-001',
@@ -36,6 +38,43 @@ class MarketDB {
         student_id: 'user-003'),
   ];
   List<MarketData> get items => _items;
+
+  void addItem({
+    required String item_id,
+    required String name,
+    required String price,
+    required String imagePath,
+    required String student_id,}) {
+    String id = 'item-${(_items.length + 1).toString().padLeft(2, '0')}';
+    MarketData data = MarketData(
+      item_id: id,
+      name: name,
+      price: price,
+      imagePath: imagePath,
+      student_id: student_id,);
+    _items.add(data);
+  }
+
+
+  void updateItem({
+    required String item_id,
+    required String name,
+    required String price,
+    required String imagePath,
+    required String student_id,}) {
+    String id = 'feed-${(_items.length + 1).toString().padLeft(2, '0')}';
+    _items.removeWhere((MarketData) => MarketData.item_id == item_id);
+    MarketData data = MarketData(
+      item_id: id,
+      name: name,
+      price: price,
+      imagePath: imagePath,
+      student_id: student_id,);
+    _items.add(data);
+  }
 }
-/// The singleton instance providing access to all user data for clients.
-MarketDB marketDB = MarketDB();
+
+
+final MarketDBProvider = Provider<MarketDB>((ref) {
+  return MarketDB(ref);
+});

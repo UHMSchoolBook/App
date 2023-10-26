@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// Assume LiveDB and LiveData are defined in live_db.dart
 import '../data_model/live_db.dart';
 
 class LiveActivityPage extends StatefulWidget {
@@ -31,18 +30,7 @@ class _LiveActivityPageState extends State<LiveActivityPage> with SingleTickerPr
     // Remaining Flutter UI code, unmodified...
     return Scaffold(
       appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          },
-        ),
-        title: Text('Live Activity'),
-        bottom: TabBar(
+        title: TabBar(
           controller: _tabController,
           isScrollable: true,
           indicatorColor: Colors.white,
