@@ -60,7 +60,7 @@ class EditFeedPage extends ConsumerWidget {
                 }
                 Navigator.of(context).pop();
               },
-              child: Text('Add'),
+              child: Text(feedId == null ? 'Add' : 'Update'),
             ),
           ],
         ),
