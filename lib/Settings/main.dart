@@ -1,4 +1,3 @@
-
 import 'package:connect_people/Register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +8,6 @@ import '../MarketPlacePage/marketplace.dart';
 import '../Components/appwrapper.dart';
 import '../MessagesPage/messages.dart';
 import '../LivePage/livepage.dart';
-import '../Register/register.dart';
 import '../Settings/settings_page.dart';
 
 void main() {

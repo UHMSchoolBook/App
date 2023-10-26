@@ -1,5 +1,3 @@
-// message_db.dart
-
 class MessageData {
   MessageData({
     required this.username,
