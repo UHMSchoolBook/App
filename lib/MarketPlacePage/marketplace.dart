@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data_model/marketplace_db.dart';
 import '../data_model/housesharing_db.dart';
 import '../data_model/user_db.dart';
+import '../MarketPlacePage/edit_Item.dart';
+import '../MarketPlacePage/edit_housesharing.dart';
 
 class MarketplacePage extends StatelessWidget {
   @override
@@ -23,52 +26,94 @@ class MarketplacePage extends StatelessWidget {
             HouseSharingTab(),
           ],
         ),
+        floatingActionButton: Builder(
+          builder: (context) {
+            return FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () {
+
+                final tabIndex = DefaultTabController.of(context)!.index;
+                if (tabIndex == 0) {
+                  // Sale tab is active
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => EditItemPage(),
+                  ));
+                } else if (tabIndex == 1) {
+                  // House Sharing tab is active
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => EditHouseSharingPage(),
+                  ));
+                }
+              },
+            );
+          },
+        ),
       ),
     );
   }
 }
 
-class SaleTab extends StatelessWidget {
+
+class SaleTab extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final MarketDB = ref.watch(MarketDBProvider);
+    final currentUserID = ref.watch(currentUserIDProvider.notifier).state ?? '';
     return ListView.builder(
-      itemCount: marketDB.items.length,
+      itemCount: MarketDB.items.length,
       itemBuilder: (context, index) {
         return MarketplaceItem(
-          marketDB.items[index].name,
-          marketDB.items[index].student_id,
-          marketDB.items[index].price,
-          marketDB.items[index].imagePath,
+          title: MarketDB.items[index].name,
+          author: MarketDB.items[index].student_id,
+          price: MarketDB.items[index].price,
+          imagePath: MarketDB.items[index].imagePath,
+          currentUserId: currentUserID,
+          itemId: MarketDB.items[index].item_id,
         );
       },
     );
   }
 }
 
-class HouseSharingTab extends StatelessWidget {
+class HouseSharingTab extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final houseDB = ref.watch(HouseDBProvider);
+    final currentUserID = ref.watch(currentUserIDProvider.notifier).state ?? '';
+
     return ListView.builder(
       itemCount: houseDB.rooms.length,
       itemBuilder: (context, index) {
         return MarketplaceItem(
-          houseDB.rooms[index].location,
-          houseDB.rooms[index].student_id,
-          houseDB.rooms[index].rent,
-          houseDB.rooms[index].imagePath,
+          title: houseDB.rooms[index].location,
+          author: houseDB.rooms[index].student_id,
+          price: houseDB.rooms[index].rent,
+          imagePath: houseDB.rooms[index].imagePath,
+          currentUserId: currentUserID,
+          itemId: houseDB.rooms[index].item_id,
         );
       },
     );
+  }
 }
-}
+
 
 class MarketplaceItem extends StatelessWidget {
   final String title;
   final String author;
   final String price;
   final String imagePath;
+  final String currentUserId;
+  final String itemId;
 
-  MarketplaceItem(this.title, this.author, this.price, this.imagePath);
+  MarketplaceItem({
+    required this.title,
+    required this.author,
+    required this.price,
+    required this.imagePath,
+    required this.currentUserId,
+    required this.itemId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -84,13 +129,42 @@ class MarketplaceItem extends StatelessWidget {
             Text('Price: $price'),
           ],
         ),
-        trailing: Image.network(
-          imagePath,
-          width: 60,
-          height: 60,
-          fit: BoxFit.cover,
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.network(
+              imagePath,
+              width: 60,
+              height: 60,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(width: 10),
+            if (currentUserId == author)
+              PopupMenuButton<String>(
+                onSelected: (value) {
+                  if (value == 'edit') {
+                    if (itemId.startsWith('item-')) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => EditItemPage(itemId: itemId),
+                      ));
+                    } else {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => EditHouseSharingPage(roomId: itemId),
+                      ));
+                    }
+                  }
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  const PopupMenuItem<String>(
+                    value: 'edit',
+                    child: Text('Edit'),
+                  ),
+                ],
+              ),
+          ],
         ),
       ),
     );
   }
 }
+

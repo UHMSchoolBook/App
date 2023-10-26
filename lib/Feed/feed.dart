@@ -102,7 +102,7 @@ class FeedItem extends StatelessWidget {
   final String author;
   final String feedId;
   final bool isCourseFeed;
-  final String currentUserId; // Add this
+  final String currentUserId;
 
   FeedItem({
     required this.feedId,
@@ -110,7 +110,7 @@ class FeedItem extends StatelessWidget {
     required this.content,
     required this.author,
     required this.isCourseFeed,
-    required this.currentUserId, // Add this
+    required this.currentUserId,
   });
 
   @override
@@ -130,21 +130,29 @@ class FeedItem extends StatelessWidget {
             Text('Posted by: ${userDB.getUserName(author)}'),
           ],
         ),
-        trailing: (currentUserId == author) ? IconButton( // Check if the current user is the author
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            if (isCourseFeed) {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => EditFeedPage(feedId: feedId),
-              ));
-            } else {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => EditCFeedPage(feedId: feedId),
-              ));
+        trailing: (currentUserId == author) ? PopupMenuButton<String>(
+          onSelected: (value) {
+            if (value == 'edit') {
+              if (isCourseFeed) {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => EditFeedPage(feedId: feedId),
+                ));
+              } else {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => EditCFeedPage(feedId: feedId),
+                ));
+              }
             }
           },
-        ) : null, // If not the author, don't show the edit button
+          itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+            const PopupMenuItem<String>(
+              value: 'edit',
+              child: Text('Edit'),
+            ),
+          ],
+        ) : null,
       ),
     );
   }
 }
+
