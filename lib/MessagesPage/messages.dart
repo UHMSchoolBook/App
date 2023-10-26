@@ -7,7 +7,7 @@ import '../riverpod/message_notifier.dart';
 class ChatScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final messages = ref.watch(messageProvider);
+    final messages = ref.watch(messageProvider1);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -57,7 +57,7 @@ class ChatScreen extends ConsumerWidget {
               TextButton(
                 onPressed: () {
                   if (username != null && text != null && avatarUrl != null) {
-                    ref.read(messageProvider.notifier).addMessage(
+                    ref.read(messageProvider1.notifier).addMessage(
                         MessageData(username: username!, text: text!, avatarUrl: avatarUrl!));
                     Navigator.of(context).pop();
                   }
