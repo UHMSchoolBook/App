@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../Student_Profile_Page/Presentation/student_ProfilePage.dart';
 import '../../Student_Profile_Page/Domain/user_db.dart';
-import 'package:connect_people/Student_Profile_Page/Data/user_notifier.dart';
+import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// Presents the page containing fields to enter a username and password, plus buttons.
 class SigninView extends ConsumerWidget {

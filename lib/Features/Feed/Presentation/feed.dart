@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../Student_Profile_Page/Domain/user_db.dart';
 import '../Domain/coursefeed_db.dart';
 import '../Domain/clubfeed_db.dart';
-import 'package:connect_people/Feed/Presentation/edit_feed.dart';
-import 'package:connect_people/Feed/Presentation/edit_cfeed.dart';
-import 'package:connect_people/Student_Profile_Page/Data/user_notifier.dart';
+import 'package:connect_people/Features/Feed/Presentation/edit_feed.dart';
+import 'package:connect_people/Features/Feed/Presentation/edit_cfeed.dart';
+import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
 class FeedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

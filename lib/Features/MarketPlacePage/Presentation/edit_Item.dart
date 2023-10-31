@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../Domain/marketplace_db.dart';
 import '../../Student_Profile_Page/Domain/user_db.dart';
-import 'package:connect_people/Student_Profile_Page/Data/user_notifier.dart';
-import 'package:connect_people/MarketPlacePage/Data/marketplace_notifier.dart';
+import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
+import 'package:connect_people/Features/MarketPlacePage/Data/marketplace_notifier.dart';
 class EditItemPage extends ConsumerWidget {
   final String? itemId;
 

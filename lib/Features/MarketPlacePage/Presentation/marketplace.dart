@@ -5,9 +5,9 @@ import '../Domain/housesharing_db.dart';
 import '../../Student_Profile_Page/Domain/user_db.dart';
 import 'edit_Item.dart';
 import 'edit_housesharing.dart';
-import 'package:connect_people/Student_Profile_Page/Data/user_notifier.dart';
-import 'package:connect_people/MarketPlacePage/Data/housesharing_notifier.dart';
-import 'package:connect_people/MarketPlacePage/Data/marketplace_notifier.dart';
+import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
+import 'package:connect_people/Features/MarketPlacePage/Data/housesharing_notifier.dart';
+import 'package:connect_people/Features/MarketPlacePage/Data/marketplace_notifier.dart';
 class MarketplacePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

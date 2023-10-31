@@ -1,20 +1,14 @@
-import 'package:connect_people/Authentication/Presentation/register.dart';
+import 'package:connect_people/Features/Authentication/Presentation/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../Authentication/Presentation/sign_in_view.dart';
-import '../Student_Profile_Page/Presentation/student_ProfilePage.dart';
-import '../Feed/Presentation/feed.dart';
-import '../MarketPlacePage/Presentation/marketplace.dart';
-import '../Components/appwrapper.dart';
-import '../MessagesPage/Presentation/messages.dart';
-import '../LivePage/Presentation/livepage.dart';
-import '../Settings/settings_page.dart';
-
-void main() {
-  runApp(ProviderScope(child: MyApp()));
-}
-
-
+import 'Features/Authentication/Presentation/sign_in_view.dart';
+import 'Features/Student_Profile_Page/Presentation/student_ProfilePage.dart';
+import 'Features/Feed/Presentation/feed.dart';
+import 'Features/MarketPlacePage/Presentation/marketplace.dart';
+import 'Features/Common/appwrapper.dart';
+import 'Features/MessagesPage/Presentation/messages.dart';
+import 'Features/LivePage/Presentation/livepage.dart';
+import 'Features/Settings/Presentation/settings_page.dart';
 
 class MyApp extends ConsumerWidget {
 
@@ -28,8 +22,8 @@ class MyApp extends ConsumerWidget {
       darkTheme: ThemeData.dark(),
       themeMode: themeMode,
       routes: {
-    '/': (context) => SigninView(),
-    '/register': (context) => SignUpPage(),
+        '/': (context) => SigninView(),
+        '/register': (context) => SignUpPage(),
         '/settings': (context) => SettingsPage(),
         '/StudentProfile': (context) => AppWrapper(
           pages: [
@@ -81,5 +75,3 @@ class MyApp extends ConsumerWidget {
     );
   }
 }
-
-
