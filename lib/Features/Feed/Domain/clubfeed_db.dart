@@ -65,6 +65,3 @@ class ClubFeedDB {
     _cfeeds.add(data);
   }
 }
-final ClubFeedDBProvider = Provider<ClubFeedDB>((ref) {
-  return ClubFeedDB(ref);
-});

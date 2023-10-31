@@ -66,7 +66,3 @@ void updateCourseFeed({
 }
 
 
-
-final CourseFeedDBProvider = Provider<CourseFeedDB>((ref) {
-  return CourseFeedDB(ref);
-});
