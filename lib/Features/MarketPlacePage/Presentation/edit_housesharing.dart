@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data_model/housesharing_db.dart';
-import '../data_model/user_db.dart';
-
+import '../Domain/housesharing_db.dart';
+import '../../Student_Profile_Page/Domain/user_db.dart';
+import 'package:connect_people/Student_Profile_Page/Data/user_notifier.dart';
+import 'package:connect_people/MarketPlacePage/Data/housesharing_notifier.dart';
 class EditHouseSharingPage extends ConsumerWidget {
   final String? roomId;
 

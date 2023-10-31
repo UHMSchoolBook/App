@@ -75,6 +75,3 @@ class MarketDB {
 }
 
 
-final MarketDBProvider = Provider<MarketDB>((ref) {
-  return MarketDB(ref);
-});

@@ -81,6 +81,3 @@ class HouseDB {
   }
 }
 
-final HouseDBProvider = Provider<HouseDB>((ref) {
-  return HouseDB(ref);
-});

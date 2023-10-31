@@ -61,10 +61,7 @@ class UserDB {
   }
 }
 
-
 /// The singleton instance providing access to all user data for clients.
 UserDB userDB = UserDB();
 
 
-final userDBProvider = Provider<UserDB>((ref) => UserDB());
-final currentUserIDProvider = StateProvider<String?>((ref) => null);

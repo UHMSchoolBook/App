@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import "../data_model/messages_db.dart";
+import '../Domain/messages_db.dart';
 
 class MessageNotifier extends StateNotifier<List<MessageData>> {
   MessageNotifier() : super([]);

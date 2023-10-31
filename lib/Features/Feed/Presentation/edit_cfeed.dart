@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data_model/clubfeed_db.dart';
-import '../data_model/user_db.dart';
-
+import '../Domain/clubfeed_db.dart';
+import '../../Student_Profile_Page/Domain/user_db.dart';
+import 'package:connect_people/Student_Profile_Page/Data/user_notifier.dart';
 class EditCFeedPage extends ConsumerWidget {
   final String? feedId;
 
