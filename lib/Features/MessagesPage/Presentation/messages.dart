@@ -1,13 +1,14 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../Domain/messages_db.dart';
+import '../Domain/message.dart';
+// import '../Domain/messages_db.dart';
 import '../Data/message_notifier.dart';
 
 class ChatScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final messages = ref.watch(messageProvider1);
+    final messages = ref.watch(messageProvider);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -57,7 +58,7 @@ class ChatScreen extends ConsumerWidget {
               TextButton(
                 onPressed: () {
                   if (username != null && text != null && avatarUrl != null) {
-                    ref.read(messageProvider1.notifier).addMessage(
+                    ref.read(messageProvider.notifier).addMessage(
                         MessageData(username: username!, text: text!, avatarUrl: avatarUrl!));
                     Navigator.of(context).pop();
                   }
