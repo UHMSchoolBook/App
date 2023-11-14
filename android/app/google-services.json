@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "696735704101",
+    "project_id": "uhmconnectpeople",
+    "storage_bucket": "uhmconnectpeople.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:696735704101:android:cadd67c775ed4d0e7c4bcc",
+        "android_client_info": {
+          "package_name": "com.example.connect_people"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0gC4VDuGRSgaL_gnG9lU-5HiGkATGL8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

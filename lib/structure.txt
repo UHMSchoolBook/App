@@ -1,0 +1,60 @@
+.
+├── app.dart
+├── Features
+│   ├── Authentication
+│   │   └── Presentation
+│   │       ├── register.dart
+│   │       └── sign_in_view.dart
+│   ├── Common
+│   │   ├── appwrapper.dart
+│   │   └── bottom_navigation_bar.dart
+│   ├── Feed
+│   │   ├── Data
+│   │   │   ├── cfeed_notifier.dart
+│   │   │   └── feed_notifier.dart
+│   │   ├── Domain
+│   │   │   ├── clubfeed_db.dart
+│   │   │   └── coursefeed_db.dart
+│   │   └── Presentation
+│   │       ├── edit_cfeed.dart
+│   │       ├── edit_feed.dart
+│   │       └── feed.dart
+│   ├── LivePage
+│   │   ├── Domain
+│   │   │   └── live_db.dart
+│   │   └── Presentation
+│   │       └── livepage.dart
+│   ├── MarketPlacePage
+│   │   ├── Data
+│   │   │   ├── housesharing_notifier.dart
+│   │   │   └── marketplace_notifier.dart
+│   │   ├── Domain
+│   │   │   ├── housesharing_db.dart
+│   │   │   └── marketplace_db.dart
+│   │   └── Presentation
+│   │       ├── edit_housesharing.dart
+│   │       ├── edit_Item.dart
+│   │       └── marketplace.dart
+│   ├── MessagesPage
+│   │   ├── Data
+│   │   │   └── message_notifier.dart
+│   │   ├── Domain
+│   │   │   └── messages_db.dart
+│   │   └── Presentation
+│   │       └── messages.dart
+│   ├── Settings
+│   │   └── Presentation
+│   │       └── settings_page.dart
+│   └── Student_Profile_Page
+│       ├── Data
+│       │   └── user_notifier.dart
+│       ├── Domain
+│       │   ├── courses_db.dart
+│       │   ├── groups_db.dart
+│       │   └── user_db.dart
+│       └── Presentation
+│           └── student_ProfilePage.dart
+├── main.dart
+└── structure.txt
+
+25 directories, 32 files
