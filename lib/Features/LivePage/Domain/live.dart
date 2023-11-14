@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import '../Data/livedb.dart';
 
 part 'live.freezed.dart';
 part 'live.g.dart'; // Generated file for JSON serialization
@@ -17,3 +18,5 @@ class Live with _$Live {
 
   factory Live.fromJson(Map<String, dynamic> json) => _$LiveFromJson(json);
 }
+
+LiveDB liveDB = LiveDB();

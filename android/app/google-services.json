@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "696735704101",
-    "project_id": "uhmconnectpeople",
-    "storage_bucket": "uhmconnectpeople.appspot.com"
+    "project_number": "402862399682",
+    "project_id": "uhmschoolbook",
+    "storage_bucket": "uhmschoolbook.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:696735704101:android:cadd67c775ed4d0e7c4bcc",
+        "mobilesdk_app_id": "1:402862399682:android:87168739a81d09e02c1b5b",
         "android_client_info": {
           "package_name": "com.example.connect_people"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA0gC4VDuGRSgaL_gnG9lU-5HiGkATGL8c"
+          "current_key": "AIzaSyB75zx0pTXh6vWekg7KndEkK5Wi94_uYDQ"
         }
       ],
       "services": {

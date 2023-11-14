@@ -44,37 +44,37 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBagUMHxIOg_3xLgC8nebQX0RynKY94yp0',
-    appId: '1:696735704101:web:c974eac126a324917c4bcc',
-    messagingSenderId: '696735704101',
-    projectId: 'uhmconnectpeople',
-    authDomain: 'uhmconnectpeople.firebaseapp.com',
-    storageBucket: 'uhmconnectpeople.appspot.com',
+    apiKey: 'AIzaSyDDIl8kmgaz0hwtswyxZm3C_dguwDgkGYs',
+    appId: '1:402862399682:web:1090a89c86f6aca02c1b5b',
+    messagingSenderId: '402862399682',
+    projectId: 'uhmschoolbook',
+    authDomain: 'uhmschoolbook.firebaseapp.com',
+    storageBucket: 'uhmschoolbook.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA0gC4VDuGRSgaL_gnG9lU-5HiGkATGL8c',
-    appId: '1:696735704101:android:cadd67c775ed4d0e7c4bcc',
-    messagingSenderId: '696735704101',
-    projectId: 'uhmconnectpeople',
-    storageBucket: 'uhmconnectpeople.appspot.com',
+    apiKey: 'AIzaSyB75zx0pTXh6vWekg7KndEkK5Wi94_uYDQ',
+    appId: '1:402862399682:android:87168739a81d09e02c1b5b',
+    messagingSenderId: '402862399682',
+    projectId: 'uhmschoolbook',
+    storageBucket: 'uhmschoolbook.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCC5xS35fDRCRY5kON4UepJVOYle9ZTQbQ',
-    appId: '1:696735704101:ios:06fdf2cd2d1bfd7b7c4bcc',
-    messagingSenderId: '696735704101',
-    projectId: 'uhmconnectpeople',
-    storageBucket: 'uhmconnectpeople.appspot.com',
+    apiKey: 'AIzaSyCo32IrxGuT9PeplBjSLfpjBKb2cJ9wFls',
+    appId: '1:402862399682:ios:759990d2161205652c1b5b',
+    messagingSenderId: '402862399682',
+    projectId: 'uhmschoolbook',
+    storageBucket: 'uhmschoolbook.appspot.com',
     iosBundleId: 'com.example.connectPeople',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCC5xS35fDRCRY5kON4UepJVOYle9ZTQbQ',
-    appId: '1:696735704101:ios:a06f68f0ac95942a7c4bcc',
-    messagingSenderId: '696735704101',
-    projectId: 'uhmconnectpeople',
-    storageBucket: 'uhmconnectpeople.appspot.com',
+    apiKey: 'AIzaSyCo32IrxGuT9PeplBjSLfpjBKb2cJ9wFls',
+    appId: '1:402862399682:ios:b53f2256a99ef0ff2c1b5b',
+    messagingSenderId: '402862399682',
+    projectId: 'uhmschoolbook',
+    storageBucket: 'uhmschoolbook.appspot.com',
     iosBundleId: 'com.example.connectPeople.RunnerTests',
   );
 }

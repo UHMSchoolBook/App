@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyCC5xS35fDRCRY5kON4UepJVOYle9ZTQbQ</string>
+	<string>AIzaSyCo32IrxGuT9PeplBjSLfpjBKb2cJ9wFls</string>
 	<key>GCM_SENDER_ID</key>
-	<string>696735704101</string>
+	<string>402862399682</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.connectPeople</string>
 	<key>PROJECT_ID</key>
-	<string>uhmconnectpeople</string>
+	<string>uhmschoolbook</string>
 	<key>STORAGE_BUCKET</key>
-	<string>uhmconnectpeople.appspot.com</string>
+	<string>uhmschoolbook.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:696735704101:ios:06fdf2cd2d1bfd7b7c4bcc</string>
+	<string>1:402862399682:ios:759990d2161205652c1b5b</string>
 </dict>
 </plist>

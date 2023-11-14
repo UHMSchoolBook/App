@@ -1,5 +1,6 @@
+import 'package:connect_people/Features/LivePage/Data/livedb.dart';
 import 'package:flutter/material.dart';
-import '../Domain/live_db.dart';
+import '../Domain/live.dart';
 
 class LiveActivityPage extends StatefulWidget {
   @override
@@ -9,9 +10,10 @@ class LiveActivityPage extends StatefulWidget {
 class _LiveActivityPageState extends State<LiveActivityPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   // Using tabs directly from liveDB instance.
-  List<String> _tabs = liveDB.tabs;
+  final List<String> _tabs = LiveDB.tabs;
   // Using the lives data from liveDB instance.
-  List<LiveData> _people = liveDB.lives;
+  final List<Live> _people = [];
+  final LiveDB liveDB = LiveDB();
 
   @override
   void initState() {

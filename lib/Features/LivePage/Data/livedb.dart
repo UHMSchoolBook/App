@@ -3,6 +3,9 @@ import '../Domain/live.dart';
 
 class LiveDB {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  static const List<String> tabs = ['Songs', 'Movies', 'Games', 'Books', 'Events'];
+
   Future<List<Live>> getLivesByMajor(String targetMajor) async {
     QuerySnapshot querySnapshot = await firestore.collection('lives').where('major', isEqualTo: targetMajor).get();
     return querySnapshot.docs

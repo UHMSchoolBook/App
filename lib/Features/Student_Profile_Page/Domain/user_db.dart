@@ -28,7 +28,7 @@ class UserDB {
     UserData(
         id: 'user-002',
         name: 'Armin',
-        email: 'armin@gmail.com',
+        email: 'asoltan@hawaii.edu',
         imagePath: 'https://hawaiidigitalhealthlab.com/content/images/2023/06/armin.jpeg',
         bio: 'I am passionate about mobile application development'),
     UserData(

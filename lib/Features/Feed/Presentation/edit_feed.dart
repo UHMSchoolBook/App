@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:connect_people/Features/Feed/Domain/coursefeed_db.dart';
+import 'package:connect_people/Features/Feed/Domain/coursefeed.dart';
 import '../../Student_Profile_Page/Domain/user_db.dart';
 import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
-import 'package:connect_people/Features/Feed/Data/feed_notifier.dart';
+
+import '../Data/feed_notifier.dart';
+
 class EditFeedPage extends ConsumerWidget {
   final String? feedId;
 
@@ -13,14 +15,19 @@ class EditFeedPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final _courseNameController = TextEditingController();
     final _postController = TextEditingController();
-    final currentUserID = ref.watch(currentUserIDProvider.notifier).state?? '';
-    final feed = ref.watch(CourseFeedDBProvider).feeds.firstWhere(
-            (element) => element.feed_id == feedId,
-        orElse: () => CourseFeedData(
-            feed_id: '', course_name: '', post: '', student_id: ''));
+    final currentUserID = ref.watch(currentUserIDProvider.notifier).state ?? '';
 
-    _courseNameController.text = feed.course_name;
-    _postController.text = feed.post;
+    // Load existing feed data if feedId is not null
+    if (feedId != null) {
+      final courseFeedDataAsyncValue = ref.watch(courseFeedByIdProvider(feedId!));
+      courseFeedDataAsyncValue.whenData((feed) {
+        if (feed != null) {
+          _courseNameController.text = feed.course_name;
+          _postController.text = feed.post;
+        }
+      });
+    }
+
 
     return Scaffold(
       appBar: AppBar(
@@ -41,24 +48,19 @@ class EditFeedPage extends ConsumerWidget {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
-                final courseDB = ref.read(CourseFeedDBProvider);
+              onPressed: () async {
+                final courseDB = ref.read(courseFeedDBProvider);
+                final newFeed = CourseFeedData(
+                  feed_id: feedId ?? DateTime.now().millisecondsSinceEpoch.toString(),
+                  course_name: _courseNameController.text,
+                  post: _postController.text,
+                  student_id: currentUserID,
+                );
+
                 if (feedId == null) {
-                  // Add new post
-                  courseDB.addCourseFeed(
-                    feed_id: 'feed-${(courseDB.feeds.length + 1).toString().padLeft(2, '0')}',
-                    course_name: _courseNameController.text,
-                    post: _postController.text,
-                    student_id: currentUserID, // This should be the logged-in user's ID
-                  );
+                  await courseDB.addCourseFeed(newFeed);
                 } else {
-                  // Update existing post
-                  courseDB.updateCourseFeed(
-                    feed_id: feedId!,
-                    course_name: _courseNameController.text,
-                    post: _postController.text,
-                    student_id: currentUserID, // This should be the logged-in user's ID
-                  );
+                  await courseDB.updateCourseFeed(feedId!, newFeed);
                 }
                 Navigator.of(context).pop();
               },

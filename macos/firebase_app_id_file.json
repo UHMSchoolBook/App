@@ -1,7 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-  "GOOGLE_APP_ID": "1:696735704101:ios:a06f68f0ac95942a7c4bcc",
-  "FIREBASE_PROJECT_ID": "uhmconnectpeople",
-  "GCM_SENDER_ID": "696735704101"
+  "GOOGLE_APP_ID": "1:402862399682:ios:b53f2256a99ef0ff2c1b5b",
+  "FIREBASE_PROJECT_ID": "uhmschoolbook",
+  "GCM_SENDER_ID": "402862399682"
 }
