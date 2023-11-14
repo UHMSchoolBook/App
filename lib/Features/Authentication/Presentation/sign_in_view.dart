@@ -3,6 +3,8 @@ import '../../Student_Profile_Page/Presentation/student_ProfilePage.dart';
 import '../../Student_Profile_Page/Domain/user_db.dart';
 import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../Data/authentication_notifier.dart';
 /// Presents the page containing fields to enter a username and password, plus buttons.
 class SigninView extends ConsumerWidget {
   const SigninView({Key? key}) : super(key: key);
@@ -54,18 +56,20 @@ class SigninView extends ConsumerWidget {
             ),
             const SizedBox(height: 12.0),
             ElevatedButton(
-              onPressed: () {
-                final userDB = ref.read(userDBProvider);
-                final email = _emailController.text;
+              onPressed: () async {
+                try {
+                  // Sign in logic
+                  await ref.read(authenticationServiceProvider).signIn(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  );
 
-                if (userDB.isUserEmail(email)) {
-                  final userID = userDB.getUserIDByEmail(email);
-                  ref.read(currentUserIDProvider.notifier).state = userID;
-
-                  Navigator.pushReplacementNamed(context, '/StudentProfile');
-                } else {
-                  // Handle invalid email (e.g., show an error message)
+                } catch (e) {
+                  // Handle errors
+                  print(e); // Log the error for debugging
+                  // Show an error message to the user
                 }
+
               },
               child: const Text('Sign in'),
             ),
@@ -85,3 +89,4 @@ class SigninView extends ConsumerWidget {
     );
   }
 }
+

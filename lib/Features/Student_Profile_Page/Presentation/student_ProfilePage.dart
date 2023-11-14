@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../ClubPage/Data/groupsProvider.dart';
+import '../../ClubPage/Presentation/groupspage.dart';
 import '../../Common/bottom_navigation_bar.dart';
+import '../../CoursesPaage/Presentation/coursepage.dart';
+import '../../CoursesPaage/Data/coursesProvide.dart';
 import '../../Feed/Presentation/feed.dart';
 import '../Domain/user_db.dart';
-import '../Domain/courses_db.dart';
-import '../Domain/groups_db.dart';
+import '../../CoursesPaage/Domain/courses_db.dart';
+import '../../ClubPage/Domain/groups_db.dart';
 import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
 
 
 class StudentProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final classDB = ref.watch(classDBProvider);
     final currentUserID = ref.watch(currentUserIDProvider.notifier).state;
 
     if (currentUserID == null) {
       return Scaffold(body: Center(child: Text("No user logged in")));
     }
 
+    final groupDB = ref.watch(groupDBProvider);
+    List<GroupData> groups = groupDB.getGroupsForStudent(currentUserID);
+
     UserData data = userDB.getUser(currentUserID);
-    List<String> classes = classDB.getClassesForStudent(currentUserID);
-    List<String> groups = groupDB.getGroupForStudent(currentUserID);
+    List<ClassData> classes = classDB.getClassesForStudent(currentUserID);
+
     return Scaffold(
       appBar: MyAppBar(data: data),
       body: SingleChildScrollView(
@@ -56,24 +64,11 @@ class StudentProfilePage extends ConsumerWidget {
                 children: <Widget>[
                   Text(
                     'Courses:',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8.0),
-                  InkWell(
-                    onTap: () {
-                      // Handle course click action
-                    },
-                    child: CourseItem(classes[0], Colors.green),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      // Handle course click action
-                    },
-                    child: CourseItem(classes[1], Colors.orange),
-                  ),
+                  for (var classData in classes)
+                    CourseItem(classData),
                 ],
               ),
             ),
@@ -84,24 +79,11 @@ class StudentProfilePage extends ConsumerWidget {
                 children: <Widget>[
                   Text(
                     'Groups:',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8.0),
-                  InkWell(
-                    onTap: () {
-                      // Handle group click action
-                    },
-                    child: GroupItem(groups[0], Colors.red),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      // Handle group click action
-                    },
-                    child: GroupItem(groups[1], Colors.purple),
-                  ),
+                  for (var groupData in groups)
+                    GroupItem(groupData),
                 ],
               ),
             ),
@@ -114,38 +96,59 @@ class StudentProfilePage extends ConsumerWidget {
 }
 
 class CourseItem extends StatelessWidget {
-  final String courseName;
-  final Color color;
+  final ClassData courseData;
 
-  CourseItem(this.courseName, this.color);
+  CourseItem(this.courseData);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: color,
-      child: ListTile(
-        title: Text(courseName),
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CoursePage(courseData: courseData),
+          ),
+        );
+      },
+      child: Container(
+        color: Colors.lightBlue, // or any other color
+        child: ListTile(
+          title: Text(courseData.name),
+          subtitle: Text(courseData.description), // Assuming description is added
+        ),
       ),
     );
   }
 }
 
 class GroupItem extends StatelessWidget {
-  final String groupName;
-  final Color color;
+  final GroupData groupData;
 
-  GroupItem(this.groupName, this.color);
+  GroupItem(this.groupData);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: color,
-      child: ListTile(
-        title: Text(groupName),
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GroupDetailPage(groupData: groupData),
+          ),
+        );
+      },
+      child: Container(
+        color: Colors.lightGreen, // or any other color
+        child: ListTile(
+          title: Text(groupData.name),
+          subtitle: Text(groupData.description), // Assuming description is added
+        ),
       ),
     );
   }
 }
+
 
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {

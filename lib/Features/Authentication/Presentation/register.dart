@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../Data/authentication_notifier.dart';
 
-class SignUpPage extends StatefulWidget{
+class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
   static const routeName = "/signup";
 
   @override
-  State<SignUpPage> createState() => SignUpViewState();
+  ConsumerState<SignUpPage> createState() => SignUpViewState();
 }
 
-class SignUpViewState extends State<SignUpPage> {
+class SignUpViewState extends ConsumerState<SignUpPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _first_name = TextEditingController();
@@ -68,11 +70,19 @@ class SignUpViewState extends State<SignUpPage> {
             ),
             const SizedBox(height: 100,),
             ElevatedButton(
-                onPressed: () {
-                  // Eventually: pushReplacementNamed
-                  Navigator.pushReplacementNamed(context, '/StudentProfile');
-                },
-                child: const Text('Register')),
+              onPressed: () async {
+                try {
+                  await ref.read(authenticationServiceProvider).signUp(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  );
+                  // Navigate to profile or home page
+                } catch (e) {
+                  // Handle errors
+                }
+              },
+              child: const Text('Register'),
+            ),
           ],
         ),
       ),

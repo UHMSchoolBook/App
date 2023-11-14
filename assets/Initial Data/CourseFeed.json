@@ -1,0 +1,17 @@
+[
+  {
+  "feed_id": "feed-001",
+  "course_name": "Introduction to Programming",
+  "post": "Today the Class was Great!",
+  "student_id": "user-001"},
+  {
+  "feed_id": "feed-002",
+  "course_name": "Software engineering",
+  "post": "We are learning flutter now!",
+  "student_id": "user-002"},
+  {
+  "feed_id": "feed-003",
+  "course_name": "Mobile Application Development",
+  "post": "Reminder: Due date of assignment is on wednesday",
+  "student_id": "user-003"}
+]
