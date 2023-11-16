@@ -14,35 +14,40 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-MessageData _$MessageDataFromJson(Map<String, dynamic> json) {
-  return _MessageData.fromJson(json);
+Message _$MessageFromJson(Map<String, dynamic> json) {
+  return _Message.fromJson(json);
 }
 
 /// @nodoc
-mixin _$MessageData {
-  String get username => throw _privateConstructorUsedError;
-  String get text => throw _privateConstructorUsedError;
-  String get avatarUrl => throw _privateConstructorUsedError;
+mixin _$Message {
+  String get senderId => throw _privateConstructorUsedError;
+  String get receiverId => throw _privateConstructorUsedError;
+  DateTime get sentTime => throw _privateConstructorUsedError;
+  String get content => throw _privateConstructorUsedError;
+  MessageType get messageType => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $MessageDataCopyWith<MessageData> get copyWith =>
-      throw _privateConstructorUsedError;
+  $MessageCopyWith<Message> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MessageDataCopyWith<$Res> {
-  factory $MessageDataCopyWith(
-          MessageData value, $Res Function(MessageData) then) =
-      _$MessageDataCopyWithImpl<$Res, MessageData>;
+abstract class $MessageCopyWith<$Res> {
+  factory $MessageCopyWith(Message value, $Res Function(Message) then) =
+      _$MessageCopyWithImpl<$Res, Message>;
   @useResult
-  $Res call({String username, String text, String avatarUrl});
+  $Res call(
+      {String senderId,
+      String receiverId,
+      DateTime sentTime,
+      String content,
+      MessageType messageType});
 }
 
 /// @nodoc
-class _$MessageDataCopyWithImpl<$Res, $Val extends MessageData>
-    implements $MessageDataCopyWith<$Res> {
-  _$MessageDataCopyWithImpl(this._value, this._then);
+class _$MessageCopyWithImpl<$Res, $Val extends Message>
+    implements $MessageCopyWith<$Res> {
+  _$MessageCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -52,138 +57,180 @@ class _$MessageDataCopyWithImpl<$Res, $Val extends MessageData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
-    Object? text = null,
-    Object? avatarUrl = null,
+    Object? senderId = null,
+    Object? receiverId = null,
+    Object? sentTime = null,
+    Object? content = null,
+    Object? messageType = null,
   }) {
     return _then(_value.copyWith(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
+      senderId: null == senderId
+          ? _value.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
               as String,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
+      receiverId: null == receiverId
+          ? _value.receiverId
+          : receiverId // ignore: cast_nullable_to_non_nullable
               as String,
-      avatarUrl: null == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
+      sentTime: null == sentTime
+          ? _value.sentTime
+          : sentTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
               as String,
+      messageType: null == messageType
+          ? _value.messageType
+          : messageType // ignore: cast_nullable_to_non_nullable
+              as MessageType,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$MessageDataImplCopyWith<$Res>
-    implements $MessageDataCopyWith<$Res> {
-  factory _$$MessageDataImplCopyWith(
-          _$MessageDataImpl value, $Res Function(_$MessageDataImpl) then) =
-      __$$MessageDataImplCopyWithImpl<$Res>;
+abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
+  factory _$$MessageImplCopyWith(
+          _$MessageImpl value, $Res Function(_$MessageImpl) then) =
+      __$$MessageImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String username, String text, String avatarUrl});
+  $Res call(
+      {String senderId,
+      String receiverId,
+      DateTime sentTime,
+      String content,
+      MessageType messageType});
 }
 
 /// @nodoc
-class __$$MessageDataImplCopyWithImpl<$Res>
-    extends _$MessageDataCopyWithImpl<$Res, _$MessageDataImpl>
-    implements _$$MessageDataImplCopyWith<$Res> {
-  __$$MessageDataImplCopyWithImpl(
-      _$MessageDataImpl _value, $Res Function(_$MessageDataImpl) _then)
+class __$$MessageImplCopyWithImpl<$Res>
+    extends _$MessageCopyWithImpl<$Res, _$MessageImpl>
+    implements _$$MessageImplCopyWith<$Res> {
+  __$$MessageImplCopyWithImpl(
+      _$MessageImpl _value, $Res Function(_$MessageImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
-    Object? text = null,
-    Object? avatarUrl = null,
+    Object? senderId = null,
+    Object? receiverId = null,
+    Object? sentTime = null,
+    Object? content = null,
+    Object? messageType = null,
   }) {
-    return _then(_$MessageDataImpl(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
+    return _then(_$MessageImpl(
+      senderId: null == senderId
+          ? _value.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
               as String,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
+      receiverId: null == receiverId
+          ? _value.receiverId
+          : receiverId // ignore: cast_nullable_to_non_nullable
               as String,
-      avatarUrl: null == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
+      sentTime: null == sentTime
+          ? _value.sentTime
+          : sentTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
               as String,
+      messageType: null == messageType
+          ? _value.messageType
+          : messageType // ignore: cast_nullable_to_non_nullable
+              as MessageType,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$MessageDataImpl implements _MessageData {
-  const _$MessageDataImpl(
-      {required this.username, required this.text, required this.avatarUrl});
+class _$MessageImpl implements _Message {
+  const _$MessageImpl(
+      {required this.senderId,
+      required this.receiverId,
+      required this.sentTime,
+      required this.content,
+      required this.messageType});
 
-  factory _$MessageDataImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MessageDataImplFromJson(json);
+  factory _$MessageImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MessageImplFromJson(json);
 
   @override
-  final String username;
+  final String senderId;
   @override
-  final String text;
+  final String receiverId;
   @override
-  final String avatarUrl;
+  final DateTime sentTime;
+  @override
+  final String content;
+  @override
+  final MessageType messageType;
 
   @override
   String toString() {
-    return 'MessageData(username: $username, text: $text, avatarUrl: $avatarUrl)';
+    return 'Message(senderId: $senderId, receiverId: $receiverId, sentTime: $sentTime, content: $content, messageType: $messageType)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MessageDataImpl &&
-            (identical(other.username, username) ||
-                other.username == username) &&
-            (identical(other.text, text) || other.text == text) &&
-            (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl));
+            other is _$MessageImpl &&
+            (identical(other.senderId, senderId) ||
+                other.senderId == senderId) &&
+            (identical(other.receiverId, receiverId) ||
+                other.receiverId == receiverId) &&
+            (identical(other.sentTime, sentTime) ||
+                other.sentTime == sentTime) &&
+            (identical(other.content, content) || other.content == content) &&
+            (identical(other.messageType, messageType) ||
+                other.messageType == messageType));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, username, text, avatarUrl);
+  int get hashCode => Object.hash(
+      runtimeType, senderId, receiverId, sentTime, content, messageType);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$MessageDataImplCopyWith<_$MessageDataImpl> get copyWith =>
-      __$$MessageDataImplCopyWithImpl<_$MessageDataImpl>(this, _$identity);
+  _$$MessageImplCopyWith<_$MessageImpl> get copyWith =>
+      __$$MessageImplCopyWithImpl<_$MessageImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$MessageDataImplToJson(
+    return _$$MessageImplToJson(
       this,
     );
   }
 }
 
-abstract class _MessageData implements MessageData {
-  const factory _MessageData(
-      {required final String username,
-      required final String text,
-      required final String avatarUrl}) = _$MessageDataImpl;
+abstract class _Message implements Message {
+  const factory _Message(
+      {required final String senderId,
+      required final String receiverId,
+      required final DateTime sentTime,
+      required final String content,
+      required final MessageType messageType}) = _$MessageImpl;
 
-  factory _MessageData.fromJson(Map<String, dynamic> json) =
-      _$MessageDataImpl.fromJson;
+  factory _Message.fromJson(Map<String, dynamic> json) = _$MessageImpl.fromJson;
 
   @override
-  String get username;
+  String get senderId;
   @override
-  String get text;
+  String get receiverId;
   @override
-  String get avatarUrl;
+  DateTime get sentTime;
+  @override
+  String get content;
+  @override
+  MessageType get messageType;
   @override
   @JsonKey(ignore: true)
-  _$$MessageDataImplCopyWith<_$MessageDataImpl> get copyWith =>
+  _$$MessageImplCopyWith<_$MessageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -9,7 +9,7 @@ import 'Features/Student_Profile_Page/Presentation/student_ProfilePage.dart';
 import 'Features/Feed/Presentation/feed.dart';
 import 'Features/MarketPlacePage/Presentation/marketplace.dart';
 import 'Features/Common/appwrapper.dart';
-import 'Features/MessagesPage/Presentation/messages.dart';
+import 'Features/MessagesPage/Presentation/chats_screen.dart';
 import 'Features/LivePage/Presentation/livepage.dart';
 import 'Features/Settings/Presentation/settings_page.dart';
 

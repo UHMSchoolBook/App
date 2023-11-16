@@ -6,16 +6,20 @@ part of 'message.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MessageDataImpl _$$MessageDataImplFromJson(Map<String, dynamic> json) =>
-    _$MessageDataImpl(
-      username: json['username'] as String,
-      text: json['text'] as String,
-      avatarUrl: json['avatarUrl'] as String,
+_$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
+    _$MessageImpl(
+      senderId: json['senderId'] as String,
+      receiverId: json['receiverId'] as String,
+      sentTime: DateTime.parse(json['sentTime'] as String),
+      content: json['content'] as String,
+      messageType: MessageType.fromJson(json['messageType'] as String),
     );
 
-Map<String, dynamic> _$$MessageDataImplToJson(_$MessageDataImpl instance) =>
+Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
     <String, dynamic>{
-      'username': instance.username,
-      'text': instance.text,
-      'avatarUrl': instance.avatarUrl,
+      'senderId': instance.senderId,
+      'receiverId': instance.receiverId,
+      'sentTime': instance.sentTime.toIso8601String(),
+      'content': instance.content,
+      'messageType': instance.messageType,
     };
