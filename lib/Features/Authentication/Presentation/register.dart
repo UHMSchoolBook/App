@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../Data/authentication_notifier.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -14,9 +17,9 @@ class SignUpPage extends ConsumerStatefulWidget {
 class SignUpViewState extends ConsumerState<SignUpPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _first_name = TextEditingController();
-  final _last_name = TextEditingController();
-  final _age = TextEditingController();
+  final _nameController = TextEditingController(); // Controller for full name
+  final _imagePathController = TextEditingController(); // Controller for image path
+  final _ageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,31 +39,16 @@ class SignUpViewState extends ConsumerState<SignUpPage> {
                 const SizedBox(height: 16.0),
               ],
             ),
-            TextField(
-              controller: _first_name,
-              decoration: const InputDecoration(
-                labelText: 'First Name',
-              ),
-            ),
-            TextField(
-              controller: _last_name,
-              decoration: const InputDecoration(
-                labelText: 'Last Name',
-              ),
-            ),
-            TextField(
-              controller: _age,
-              decoration: const InputDecoration(
-                labelText: 'age',
-              ),
-            ),
-            // [Name]
+            // Email TextField
             TextField(
               controller: _emailController,
               decoration: const InputDecoration(
                 labelText: 'Email',
               ),
+              keyboardType: TextInputType.emailAddress,
             ),
+
+            // Password TextField
             TextField(
               controller: _passwordController,
               decoration: const InputDecoration(
@@ -68,6 +56,31 @@ class SignUpViewState extends ConsumerState<SignUpPage> {
               ),
               obscureText: true,
             ),
+
+            // Name TextField
+            TextField(
+              controller: _nameController,
+              decoration: const InputDecoration(
+                labelText: 'Name',
+              ),
+            ),
+
+            // Image Path TextField
+            TextField(
+              controller: _imagePathController,
+              decoration: const InputDecoration(
+                labelText: 'Image Path',
+              ),
+            ),
+
+            // Age TextField
+            TextField(
+              controller: _ageController,
+              decoration: const InputDecoration(
+                labelText: 'Age',
+              ),
+            ),
+
             const SizedBox(height: 100,),
             ElevatedButton(
               onPressed: () async {
@@ -76,9 +89,19 @@ class SignUpViewState extends ConsumerState<SignUpPage> {
                     email: _emailController.text,
                     password: _passwordController.text,
                   );
-                  // Navigate to profile or home page
+
+                  User? user = FirebaseAuth.instance.currentUser;
+                  if (user != null) {
+                    FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+                      'name': _nameController.text,
+                      'imagePath': _imagePathController.text,
+                      'age': _ageController.text,
+                    });
+
+                    Navigator.of(context).pushReplacementNamed('/home');
+                  }
                 } catch (e) {
-                  // Handle errors
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
                 }
               },
               child: const Text('Register'),

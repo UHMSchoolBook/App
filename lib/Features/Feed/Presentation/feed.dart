@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../Student_Profile_Page/Domain/user_db.dart';
-import '../Domain/coursefeed_db.dart';
 import '../Domain/clubfeed_collection.dart';
 import 'package:connect_people/Features/Feed/Presentation/edit_feed.dart';
 import 'package:connect_people/Features/Feed/Presentation/edit_cfeed.dart';

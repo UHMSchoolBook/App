@@ -1,6 +1,16 @@
+// marketplace_providers.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:connect_people/Features/MarketPlacePage/Domain/marketplace_db.dart';
+import '../Domain/marketplace.dart';
+import '../Domain/marketplace_collection.dart';
 
-final MarketDBProvider = Provider<MarketDB>((ref) {
-  return MarketDB(ref);
+
+final marketPlaceDBProvider = Provider((ref) => MarketPlaceDB());
+
+final marketPlaceStreamProvider = StreamProvider.autoDispose<List<MarketPlaceData>>((ref) {
+  final marketPlaceDB = ref.watch(marketPlaceDBProvider);
+  return marketPlaceDB.getItems();
+});
+
+final marketPlaceByIdProvider = FutureProvider.family<MarketPlaceData?, String>((ref, itemId) {
+  return ref.read(marketPlaceDBProvider).getItemById(itemId);
 });

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../Authentication/Data/authentication_notifier.dart';
 import 'bottom_navigation_bar.dart';
 import '../Settings/Presentation/settings_page.dart';
 class AppWrapper extends ConsumerWidget {
@@ -17,6 +18,7 @@ class AppWrapper extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _selectedIndex = ref.watch(selectedIndexProvider);
+    final authService = ref.read(authenticationServiceProvider); // Assuming you have a provider for AuthenticationService
 
     return Scaffold(
       appBar: AppBar(
@@ -39,8 +41,8 @@ class AppWrapper extends ConsumerWidget {
             ),
             ListTile(
               title: Text('Sign Out'),
-              onTap: () {
-                // Handle sign out logic here (if any)
+              onTap: () async {
+                await authService.signOut(); // Call signOut from AuthenticationService
 
                 // Close the drawer
                 Navigator.of(context).pop();
