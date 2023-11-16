@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../Student_Profile_Page/Domain/user_db.dart';
-import '../Domain/coursefeed_db.dart';
-import '../Domain/clubfeed_db.dart';
+import '../Domain/clubfeed_collection.dart';
 import 'package:connect_people/Features/Feed/Presentation/edit_feed.dart';
 import 'package:connect_people/Features/Feed/Presentation/edit_cfeed.dart';
 import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
@@ -36,21 +35,27 @@ class FeedPage extends StatelessWidget {
 class CoursesTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentUserID = ref.watch(currentUserIDProvider.notifier).state?? '';
-    final courseDB = ref.watch(CourseFeedDBProvider);
+    final currentUserID = ref.watch(currentUserIDProvider.notifier).state ?? '';
+    final courseFeedsAsyncValue = ref.watch(courseFeedsStreamProvider);
+
     return Scaffold(
-      body: ListView.builder(
-        itemCount: courseDB.feeds.length,
-        itemBuilder: (context, index) {
-          return FeedItem(
-            feedId: courseDB.feeds[index].feed_id,
-            title: courseDB.feeds[index].course_name,
-            content: courseDB.feeds[index].post,
-            author: courseDB.feeds[index].student_id,
-            isCourseFeed: true,
-            currentUserId: currentUserID,
-          );
-        },
+      body: courseFeedsAsyncValue.when(
+        data: (courseFeeds) => ListView.builder(
+          itemCount: courseFeeds.length,
+          itemBuilder: (context, index) {
+            final feed = courseFeeds[index];
+            return FeedItem(
+              feedId: feed.feed_id,
+              title: feed.course_name,
+              content: feed.post,
+              author: feed.student_id,
+              isCourseFeed: true,
+              currentUserId: currentUserID,
+            );
+          },
+        ),
+        loading: () => CircularProgressIndicator(),
+        error: (e, st) => Text('Error: $e'),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -65,36 +70,44 @@ class CoursesTab extends ConsumerWidget {
 }
 
 
+
 class ClubsTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentUserID = ref.watch(currentUserIDProvider.notifier).state?? '';
-    final clubDB = ref.watch(ClubFeedDBProvider);
+    final currentUserID = ref.watch(currentUserIDProvider.notifier).state ?? '';
+    final clubFeedsAsyncValue = ref.watch(clubFeedsStreamProvider);
+
     return Scaffold(
-      body: ListView.builder(
-        itemCount: clubDB.cfeeds.length,
-        itemBuilder: (context, index) {
-          return FeedItem(
-            feedId: clubDB.cfeeds[index].feed_id,
-            title: clubDB.cfeeds[index].club_name,
-            content: clubDB.cfeeds[index].post,
-            author: clubDB.cfeeds[index].student_id,
-            isCourseFeed: false,
-            currentUserId: currentUserID,
-          );
-        },
+      body: clubFeedsAsyncValue.when(
+        data: (clubFeeds) => ListView.builder(
+          itemCount: clubFeeds.length,
+          itemBuilder: (context, index) {
+            final feed = clubFeeds[index];
+            return FeedItem(
+              feedId: feed.feed_id,
+              title: feed.club_name,
+              content: feed.post,
+              author: feed.student_id,
+              isCourseFeed: false,
+              currentUserId: currentUserID,
+            );
+          },
+        ),
+        loading: () => CircularProgressIndicator(),
+        error: (e, st) => Text('Error: $e'),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => EditCFeedPage(), // Navigate to the EditCFeedPage when pressed
+            builder: (context) => EditCFeedPage(),
           ));
         },
       ),
     );
   }
 }
+
 
 
 

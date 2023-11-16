@@ -1,0 +1,17 @@
+[
+  {
+  "feed_id": "feed-001",
+  "club_name": "Reading Group",
+  "post": "We will read Mark Twain this week on Thursday!",
+  "student_id": "user-001"},
+  {
+  "feed_id": "feed-002",
+  "club_name": "Programming Club",
+  "post": "We are learning flutter now! and It is Cool!",
+  "student_id": "user-002"},
+  {
+  "feed_id": "feed-003",
+  "club_name": "Machine Learning Club",
+  "post": "No club activities for next week. Have Fun!",
+  "student_id": "user-003"}
+]
