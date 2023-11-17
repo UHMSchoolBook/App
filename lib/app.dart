@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'Features/Authentication/Data/authentication_notifier.dart';
 import 'Features/Authentication/Presentation/sign_in_view.dart';
+import 'Features/MessagesPage/Presentation/chat_screen.dart';
 import 'Features/Student_Profile_Page/Data/user_notifier.dart';
 import 'Features/Student_Profile_Page/Domain/user_db.dart';
 import 'Features/Student_Profile_Page/Presentation/student_ProfilePage.dart';

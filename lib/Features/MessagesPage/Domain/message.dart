@@ -4,23 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 
 import '../../Student_Profile_Page/Domain/user_db.dart';
 import '../Presentation/chat_screen.dart';
-import '../view/screens/chat_screen.dart';
-import 'package:flutter/foundation.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 part 'message.freezed.dart';
 part 'message.g.dart';
@@ -132,7 +124,7 @@ class FirebaseFirestoreService {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update(data);
 
-  static Future<List<UserDB>> searchUser(
+  static Future<List> searchUser(
       String name) async {
     final snapshot = await FirebaseFirestore.instance
         .collection('users')
@@ -140,7 +132,7 @@ class FirebaseFirestoreService {
         .get();
 
     return snapshot.docs
-        .map((doc) => UserDB.fromJson(doc.data()))
+        .map((doc) => UserData.fromJson(doc.data()))
         .toList();
   }
 }
@@ -148,32 +140,32 @@ class FirebaseFirestoreService {
 class FirebaseProvider extends ChangeNotifier {
   ScrollController scrollController = ScrollController();
 
-  List<UserDB> users = [];
-  UserDB? user;
+  List<UserData> users = [];
+  UserData? user;
   List<Message> messages = [];
-  List<UserDB> search = [];
+  List<UserData> search = [];
 
-  List<UserDB> getAllUsers() {
+  List<UserData> getAllUsers() {
     FirebaseFirestore.instance
         .collection('users')
         .orderBy('lastActive', descending: true)
         .snapshots(includeMetadataChanges: true)
         .listen((users) {
       this.users = users.docs
-          .map((doc) => UserDB.fromJson(doc.data()))
+          .map((doc) => UserData.fromJson(doc.data()))
           .toList();
       notifyListeners();
     });
     return users;
   }
 
-  UserDB? getUserById(String userId) {
+  UserData? getUserById(String userId) {
     FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
         .snapshots(includeMetadataChanges: true)
         .listen((user) {
-      this.user = UserDB.fromJson(user.data()!);
+      this.user = UserData.fromJson(user.data()!);
       notifyListeners();
     });
     return user;

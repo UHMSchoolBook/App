@@ -1,10 +1,6 @@
-import 'package:firebase_chat_app/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../provider/firebase_provider.dart';
 import '../Domain/message.dart';
-import '../widgets/chat_messages.dart';
-import '../widgets/chat_text_field.dart';
 import 'chat_messages.dart';
 import 'chat_text_field.dart';
 
@@ -47,41 +43,45 @@ class _ChatScreenState extends State<ChatScreen> {
       foregroundColor: Colors.black,
       backgroundColor: Colors.transparent,
       title: Consumer<FirebaseProvider>(
-        builder: (context, value, child) =>
-        value.user != null
-            ? Row(
-          children: [
-            CircleAvatar(
-              backgroundImage:
-              NetworkImage(value.user!.image),
-              radius: 20,
-            ),
-            const SizedBox(width: 10),
-            Column(
-              children: [
-                Text(
-                  value.user!.name,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+        builder: (context, value, child) {
+          final userdata = value.user?.getUser(widget.userId);
+          value.user != null
+              ? Row(
+            children: [
+              CircleAvatar(
+                backgroundImage:
+                NetworkImage(userdata?.imagePath),
+                radius: 20,
+              ),
+              const SizedBox(width: 10),
+              Column(
+                children: [
+                  Text(
+                    value.user!.name,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  value.user!.isOnline
-                      ? 'Online'
-                      : 'Offline',
-                  style: TextStyle(
-                    color: value.user!.isOnline
-                        ? Colors.green
-                        : Colors.grey,
-                    fontSize: 14,
+                  Text(
+                    value.user!.isOnline
+                        ? 'Online'
+                        : 'Offline',
+                    style: TextStyle(
+                      color: value.user!.isOnline
+                          ? Colors.green
+                          : Colors.grey,
+                      fontSize: 14,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
-        )
-            : const SizedBox(),
+                ],
+              ),
+            ],
+          )
+
+              : const SizedBox();
+
+        }
       ));
 }

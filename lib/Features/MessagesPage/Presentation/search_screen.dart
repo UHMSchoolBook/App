@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../Student_Profile_Page/Domain/user_db.dart';
 import '../Domain/message.dart';
 import 'custom_text_field.dart';
 import 'empty_widget.dart';
@@ -20,21 +21,23 @@ class _UsersSearchScreenState
   final controller = TextEditingController();
 
   final userData = [
-    UserDB(
-      uid: '1',
+    UserData(
+      id: '1',
       name: 'Hazy',
       email: 'test@test.test',
-      image: 'https://i.pravatar.cc/150?img=0',
+      imagePath: 'https://i.pravatar.cc/150?img=0',
       isOnline: true,
       lastActive: DateTime.now(),
+      bio: "bio is not provided"
     ),
-    UserDB(
-      uid: '1',
+    UserData(
+      id: '1',
       name: 'Charlotte',
       email: 'test@test.test',
-      image: 'https://i.pravatar.cc/150?img=1',
+      imagePath: 'https://i.pravatar.cc/150?img=1',
       isOnline: false,
       lastActive: DateTime.now(),
+      bio: "bio is not provided"
     ),
   ];
 

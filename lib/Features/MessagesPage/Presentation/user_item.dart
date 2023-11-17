@@ -8,7 +8,7 @@ import 'constant.dart';
 class UserItem extends StatefulWidget {
   const UserItem({super.key, required this.user});
 
-  final UserDB user;
+  final UserData user;
 
   @override
   State<UserItem> createState() => _UserItemState();
@@ -25,7 +25,7 @@ class _UserItemState extends State<UserItem> {
     onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
             builder: (_) =>
-                ChatScreen(userId: widget.user.uid))),
+                ChatScreen(userId: widget.user.id))),
     child: ListTile(
       contentPadding: EdgeInsets.zero,
       leading: Stack(

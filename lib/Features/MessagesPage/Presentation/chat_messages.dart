@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Domain/message.dart';
+import 'empty_widget.dart';
 import 'message_bubble.dart';
 
 class ChatMessages extends StatelessWidget {
