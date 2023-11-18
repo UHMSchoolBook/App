@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import '../Domain/message.dart';
+import 'constant.dart';
 
 class MessageBubble extends StatelessWidget {
   const MessageBubble({

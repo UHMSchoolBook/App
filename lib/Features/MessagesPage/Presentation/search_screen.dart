@@ -83,7 +83,7 @@ class _UsersSearchScreenState
                     padding: const EdgeInsets.all(16),
                     itemCount: value.search.length,
                     itemBuilder: (context, index) =>
-                    value.search[index].uid !=
+                    value.search[index].id !=
                         FirebaseAuth.instance
                             .currentUser?.uid
                         ? UserItem(

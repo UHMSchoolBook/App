@@ -1,4 +1,5 @@
 import 'package:connect_people/Features/Authentication/Presentation/register.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'Features/Authentication/Data/authentication_notifier.dart';
@@ -15,7 +16,11 @@ import 'Features/LivePage/Presentation/livepage.dart';
 import 'Features/Settings/Presentation/settings_page.dart';
 
 class MyApp extends ConsumerWidget {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  String? getCurrentUserId() {
+    return _auth.currentUser?.uid;
+  }
   final selectedIndexProvider = StateProvider<int>((ref) => 0);
 
   @override
@@ -35,7 +40,7 @@ class MyApp extends ConsumerWidget {
             StudentProfilePage(),
             FeedPage(),
             LiveActivityPage(),
-            ChatScreen(),
+            ChatsScreen(),
             MarketplacePage(),
           ],
         ),
@@ -44,7 +49,7 @@ class MyApp extends ConsumerWidget {
             StudentProfilePage(),
             FeedPage(),
             LiveActivityPage(),
-            ChatScreen(),
+            ChatsScreen(),
             MarketplacePage(),
           ],
         ),
@@ -53,7 +58,7 @@ class MyApp extends ConsumerWidget {
             StudentProfilePage(),
             FeedPage(),
             LiveActivityPage(),
-            ChatScreen(),
+            ChatsScreen(),
             MarketplacePage(),
           ],
         ),
@@ -62,7 +67,7 @@ class MyApp extends ConsumerWidget {
             StudentProfilePage(),
             FeedPage(),
             LiveActivityPage(),
-            ChatScreen(),
+            ChatsScreen(),
             MarketplacePage(),
           ],
         ),
@@ -71,7 +76,7 @@ class MyApp extends ConsumerWidget {
             StudentProfilePage(),
             FeedPage(),
             LiveActivityPage(),
-            ChatScreen(),
+            ChatsScreen(),
             MarketplacePage(),
           ],
         ),
@@ -81,13 +86,13 @@ class MyApp extends ConsumerWidget {
         data: (user) {
           if (user != null && user.email != null) {
             print("User Email: ${user.email}");
-            final userID = userDB.getUserIDByEmail(user.email!); // Use the non-null assertion operator (!) after checking for null
+            final userID = getCurrentUserId(); // Use the non-null assertion operator (!) after checking for null
             ref.read(currentUserIDProvider.notifier).state = userID;
             return AppWrapper(pages: [
               StudentProfilePage(),
               FeedPage(),
               LiveActivityPage(),
-              ChatScreen(),
+              ChatsScreen(),
               MarketplacePage(),
             ],);
           } else {

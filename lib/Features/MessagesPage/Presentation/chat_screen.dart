@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../Student_Profile_Page/Domain/user_db.dart';
 import '../Domain/message.dart';
 import 'chat_messages.dart';
 import 'chat_text_field.dart';
@@ -38,26 +39,35 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  AppBar _buildAppBar() => AppBar(
+  AppBar _buildAppBar() {
+    final firebaseProvider = Provider.of<FirebaseProvider>(context, listen: false);
+
+    return AppBar(
       elevation: 0,
       foregroundColor: Colors.black,
       backgroundColor: Colors.transparent,
-      title: Consumer<FirebaseProvider>(
-        builder: (context, value, child) {
-          final userdata = value.user?.getUser(widget.userId);
-          value.user != null
-              ? Row(
+      title: FutureBuilder<UserData?>(
+        future: firebaseProvider.getUserById(widget.userId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          }
+          if (snapshot.hasError || snapshot.data == null) {
+            return Text("User not found");
+          }
+          UserData? userdata = snapshot.data;
+          return userdata != null ? Row(
             children: [
               CircleAvatar(
-                backgroundImage:
-                NetworkImage(userdata?.imagePath),
+                backgroundImage: NetworkImage(userdata.imagePath),
                 radius: 20,
               ),
               const SizedBox(width: 10),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    value.user!.name,
+                    userdata.name,
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -65,23 +75,19 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                   Text(
-                    value.user!.isOnline
-                        ? 'Online'
-                        : 'Offline',
+                    userdata.isOnline ? 'Online' : 'Offline',
                     style: TextStyle(
-                      color: value.user!.isOnline
-                          ? Colors.green
-                          : Colors.grey,
+                      color: userdata.isOnline ? Colors.green : Colors.grey,
                       fontSize: 14,
                     ),
                   ),
                 ],
               ),
             ],
-          )
+          ) : const SizedBox();  // Show empty widget if userdata is null
+        },
+      ),
+    );
+  }
 
-              : const SizedBox();
-
-        }
-      ));
 }

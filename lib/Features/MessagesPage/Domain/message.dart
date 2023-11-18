@@ -124,7 +124,7 @@ class FirebaseFirestoreService {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update(data);
 
-  static Future<List> searchUser(
+  static Future<List<UserData>> searchUser(
       String name) async {
     final snapshot = await FirebaseFirestore.instance
         .collection('users')
@@ -159,17 +159,23 @@ class FirebaseProvider extends ChangeNotifier {
     return users;
   }
 
-  UserData? getUserById(String userId) {
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .snapshots(includeMetadataChanges: true)
-        .listen((user) {
-      this.user = UserData.fromJson(user.data()!);
-      notifyListeners();
-    });
-    return user;
+  Future<UserData?> getUserById(String userId) async {
+    try {
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      if (snapshot.exists && snapshot.data() != null) {
+        user = UserData.fromJson(snapshot.data() as Map<String, dynamic>);
+        notifyListeners();
+        return user; // Assuming 'user' is a UserData instance
+      }
+      return null;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching user: $e');
+      }
+      return null;
+    }
   }
+
 
   List<Message> getMessages(String receiverId) {
     FirebaseFirestore.instance

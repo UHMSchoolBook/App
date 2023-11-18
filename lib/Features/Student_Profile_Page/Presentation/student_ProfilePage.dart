@@ -6,28 +6,47 @@ import '../../Common/bottom_navigation_bar.dart';
 import '../../CoursesPaage/Presentation/coursepage.dart';
 import '../../CoursesPaage/Data/coursesProvide.dart';
 import '../../Feed/Presentation/feed.dart';
+import '../../MessagesPage/Domain/message.dart';
 import '../Domain/user_db.dart';
 import '../../CoursesPaage/Domain/courses_db.dart';
 import '../../ClubPage/Domain/groups_db.dart';
 import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
-
 
 class StudentProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final classDB = ref.watch(classDBProvider);
     final currentUserID = ref.watch(currentUserIDProvider.notifier).state;
+    final firebaseProvider = ChangeNotifierProvider((ref) => FirebaseProvider());
+
+    final userDataProvider = FutureProvider.family<UserData?, String>((ref, userId) async {
+      return ref.read(firebaseProvider).getUserById(userId);
+    });
 
     if (currentUserID == null) {
       return Scaffold(body: Center(child: Text("No user logged in")));
     }
 
-    final groupDB = ref.watch(groupDBProvider);
-    List<GroupData> groups = groupDB.getGroupsForStudent(currentUserID);
+    final userDataAsyncValue = ref.watch(userDataProvider(currentUserID));
 
-    UserData data = userDB.getUser(currentUserID);
-    List<ClassData> classes = classDB.getClassesForStudent(currentUserID);
+    return userDataAsyncValue.when(
+      data: (userData) {
+        if (userData == null) {
+          return Scaffold(body: Center(child: Text("User not found")));
+        }
 
+        // Now use userData to build your UI
+        final groups = ref.watch(groupDBProvider).getGroupsForStudent(currentUserID);
+        final classes = classDB.getClassesForStudent(currentUserID);
+
+        return buildUserProfilePage(userData, groups, classes);
+      },
+      loading: () => Scaffold(body: Center(child: CircularProgressIndicator())),
+      error: (e, _) => Scaffold(body: Center(child: Text("Error: $e"))),
+    );
+  }
+
+  Widget buildUserProfilePage(UserData data, List<GroupData> groups, List<ClassData> classes) {
     return Scaffold(
       appBar: MyAppBar(data: data),
       body: SingleChildScrollView(
@@ -94,6 +113,7 @@ class StudentProfilePage extends ConsumerWidget {
     );
   }
 }
+
 
 class CourseItem extends StatelessWidget {
   final ClassData courseData;
