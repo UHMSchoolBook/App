@@ -21,9 +21,9 @@ class _ChatsScreenState extends State<ChatsScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    Provider.of<FirebaseProvider>(context, listen: false)
-        .getAllUsers();
-
+    Future.delayed(Duration.zero, () {
+      Provider.of<FirebaseProvider>(context, listen: false).getAllUsers();
+    });
     notificationService.firebaseNotification(context);
   }
 

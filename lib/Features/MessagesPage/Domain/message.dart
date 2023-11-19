@@ -247,7 +247,7 @@ const channel = AndroidNotificationChannel(
 
 class NotificationsService {
   static const key =
-      'AAAAEqUOTOQ:APA91bFpNSEt_rnhIdc0IRpIUeZM1USeFDSh6AALHKXNsiJwrQH_rPV8qvp9-TsDTnrat8iKdPZiyyR5AHDSVF5SzsGpwWqeJSKT_0FFf0eEmI6uOQ3tSyHnlAwAq1TC253BBiui2olI';
+      'AAAAXcx4YMI:APA91bFSNQ7VbGRW_dHujszyH99h9R9RMUFLKfcW9TqBRpGbo7aL1IK-DxoNVTvc9LZ8XCEWFT3ztqFQIGhVRW74hXVn-ZaM4NwjQsKdwDZrwbWLS3F9GmN-vQXv18gp0KCwa5K-o25M';
 
   final flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
