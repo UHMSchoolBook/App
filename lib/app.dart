@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'Features/Authentication/Data/authentication_notifier.dart';
 import 'Features/Authentication/Presentation/sign_in_view.dart';
+import 'Features/EventsPage/Presentation/eventspage.dart';
 import 'Features/Student_Profile_Page/Data/user_notifier.dart';
 import 'Features/Student_Profile_Page/Domain/users_collection.dart';
 import 'Features/Student_Profile_Page/Presentation/student_ProfilePage.dart';
@@ -10,7 +11,6 @@ import 'Features/Feed/Presentation/feed.dart';
 import 'Features/MarketPlacePage/Presentation/marketplace.dart';
 import 'Features/Common/appwrapper.dart';
 import 'Features/MessagesPage/Presentation/messages.dart';
-import 'Features/LivePage/Presentation/livepage.dart';
 import 'Features/Settings/Presentation/settings_page.dart';
 
 class MyApp extends ConsumerWidget {
@@ -48,7 +48,7 @@ class MyApp extends ConsumerWidget {
                     return AppWrapper(pages: [
                       StudentProfilePage(),
                       FeedPage(),
-                      LiveActivityPage(),
+                      EventsPage(), // Replaced LiveActivityPage with EventsPage
                       ChatScreen(),
                       MarketplacePage(),
                     ]);
@@ -76,7 +76,7 @@ class MyApp extends ConsumerWidget {
           pages: [
             StudentProfilePage(),
             FeedPage(),
-            LiveActivityPage(),
+            EventsPage(),
             ChatScreen(),
             MarketplacePage(),
           ],
@@ -85,7 +85,7 @@ class MyApp extends ConsumerWidget {
           pages: [
             StudentProfilePage(),
             FeedPage(),
-            LiveActivityPage(),
+            EventsPage(),
             ChatScreen(),
             MarketplacePage(),
           ],
@@ -94,7 +94,7 @@ class MyApp extends ConsumerWidget {
           pages: [
             StudentProfilePage(),
             FeedPage(),
-            LiveActivityPage(),
+            EventsPage(),
             ChatScreen(),
             MarketplacePage(),
           ],
@@ -103,7 +103,7 @@ class MyApp extends ConsumerWidget {
           pages: [
             StudentProfilePage(),
             FeedPage(),
-            LiveActivityPage(),
+            EventsPage(),
             ChatScreen(),
             MarketplacePage(),
           ],
@@ -112,7 +112,7 @@ class MyApp extends ConsumerWidget {
           pages: [
             StudentProfilePage(),
             FeedPage(),
-            LiveActivityPage(),
+            EventsPage(),
             ChatScreen(),
             MarketplacePage(),
           ],
