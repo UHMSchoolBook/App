@@ -19,11 +19,19 @@ class SignUpViewState extends ConsumerState<SignUpPage> {
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController(); // Controller for full name
   final _imagePathController = TextEditingController(); // Controller for image path
-  final _ageController = TextEditingController();
+  final _bioController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(appBar: AppBar(
+      title: Text("Sign Up"),
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          Navigator.of(context).pop(); // Go back to the previous page
+        },
+      ),
+    ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -75,10 +83,12 @@ class SignUpViewState extends ConsumerState<SignUpPage> {
 
             // Age TextField
             TextField(
-              controller: _ageController,
+              controller: _bioController,
               decoration: const InputDecoration(
-                labelText: 'Age',
+                labelText: 'Bio',
               ),
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
             ),
 
             const SizedBox(height: 100,),
@@ -95,10 +105,11 @@ class SignUpViewState extends ConsumerState<SignUpPage> {
                     FirebaseFirestore.instance.collection('users').doc(user.uid).set({
                       'name': _nameController.text,
                       'imagePath': _imagePathController.text,
-                      'age': _ageController.text,
+                      'email': _emailController.text,
+                      'bio': _bioController.text,
                     });
 
-                    Navigator.of(context).pushReplacementNamed('/home');
+                    Navigator.of(context).pushReplacementNamed('/');
                   }
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));

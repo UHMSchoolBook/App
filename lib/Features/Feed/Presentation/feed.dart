@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../Student_Profile_Page/Domain/user_db.dart';
+import '../../Student_Profile_Page/Domain/users_collection.dart';
 import '../Domain/clubfeed_collection.dart';
 import 'package:connect_people/Features/Feed/Presentation/edit_feed.dart';
 import 'package:connect_people/Features/Feed/Presentation/edit_cfeed.dart';
 import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
 import 'package:connect_people/Features/Feed/Data/feed_notifier.dart';
 import 'package:connect_people/Features/Feed/Data/cfeed_notifier.dart';
+final UserDB userDB = UserDB();
 class FeedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -133,8 +134,19 @@ class FeedItem extends StatelessWidget {
     return Card(
       margin: EdgeInsets.all(12),
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(userDB.getUserImagePath(author)),
+        leading: FutureBuilder<String>(
+          future: userDB.getUserImagePath(author),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircleAvatar(); // Placeholder while loading
+            }
+            if (snapshot.hasError) {
+              return CircleAvatar(); // Placeholder in case of error
+            }
+            return CircleAvatar(
+              backgroundImage: NetworkImage(snapshot.data ?? ''),
+            );
+          },
         ),
         title: Text(title),
         subtitle: Column(
@@ -142,7 +154,18 @@ class FeedItem extends StatelessWidget {
           children: [
             Text(content),
             SizedBox(height: 20),
-            Text('Posted by: ${userDB.getUserName(author)}'),
+            FutureBuilder<String>(
+              future: userDB.getUserName(author),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Text('Loading...');
+                }
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+                return Text('Posted by: ${snapshot.data}');
+              },
+            ),
           ],
         ),
         trailing: (currentUserId == author) ? PopupMenuButton<String>(

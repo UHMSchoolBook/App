@@ -1,0 +1,20 @@
+[
+  {
+  "id": "user-001",
+  "name": "Rahat",
+  "email": "rahat@gmail.com",
+  "imagePath": "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=DRMNtvMAAAAJ&citpid=2",
+  "bio": "I am a computer science masters student at UHManoa"},
+  {
+  "id": "user-002",
+  "name": "Armin",
+  "email": "armin@gmail.com",
+  "imagePath": "https://hawaiidigitalhealthlab.com/content/images/2023/06/armin.jpeg",
+  "bio": "I am passionate about mobile application development"},
+  {
+  "id": "user-003",
+  "name": "John",
+  "email": "john@gmail.com",
+  "imagePath": "https://raw.githubusercontent.com/philipmjohnson/philipmjohnson.github.io/main/img/pmj-headshot.png",
+  "bio": "I am passionate about teaching people about mobile apps"}
+]

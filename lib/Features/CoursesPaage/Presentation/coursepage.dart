@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../Student_Profile_Page/Domain/user_db.dart';
-import '../Domain/courses_db.dart';
+import '../../Student_Profile_Page/Data/user_notifier.dart';
+import '../../Student_Profile_Page/Domain/users.dart';
+import '../../Student_Profile_Page/Domain/users_collection.dart';
+import '../Data/coursesProvider.dart';
+import '../Domain/courses.dart';
 
-class CoursePage extends StatelessWidget {
-  final ClassData courseData;
+class CoursePage extends ConsumerWidget {
+  final String classId;
 
-  CoursePage({required this.courseData});
+  CoursePage({required this.classId});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final classDataAsyncValue = ref.watch(classProvider(classId));
+
+    return classDataAsyncValue.when(
+      data: (classData) => _buildCoursePageUI(classData, ref),
+      loading: () => CircularProgressIndicator(),
+      error: (e, st) => Text('Error: $e'),
+    );
+  }
+
+  Widget _buildCoursePageUI(ClassData classData, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(courseData.name),
-        backgroundColor: Colors.deepPurple, // Custom color for AppBar
+        title: Text(classData.name),
+        backgroundColor: Colors.deepPurple,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -23,55 +36,65 @@ class CoursePage extends StatelessWidget {
             children: <Widget>[
               Text(
                 'Course Description:',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.deepPurple),
+                style: TextStyle(fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple),
               ),
               SizedBox(height: 8.0),
               Text(
-                courseData.description,
+                classData.description,
                 style: TextStyle(fontSize: 16.0, color: Colors.black87),
               ),
               SizedBox(height: 16.0),
               Text(
-                'Instructor: ${courseData.instructor}',
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.teal),
+                'Instructor: ${classData.instructor}',
+                style: TextStyle(fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.teal),
               ),
               SizedBox(height: 8.0),
               Text(
-                'Schedule: ${courseData.schedule}',
+                'Schedule: ${classData.schedule}',
                 style: TextStyle(fontSize: 16.0, color: Colors.black54),
               ),
               SizedBox(height: 20.0),
               Divider(color: Colors.grey),
               Text(
                 'Students:',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.deepPurple),
+                style: TextStyle(fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple),
               ),
               SizedBox(height: 10.0),
-              _buildStudentList(courseData.student_ids),
+              _buildStudentList(classData.student_ids, ref),
             ],
-
           ),
         ),
       ),
     );
   }
 
-  Widget _buildStudentList(List<String> studentIds) {
+  Widget _buildStudentList(List<String> studentIds, WidgetRef ref) {
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemCount: studentIds.length,
       itemBuilder: (context, index) {
-        UserData studentData = userDB.getUser(studentIds[index]);
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(studentData.imagePath),
-            backgroundColor: Colors.transparent,
-          ),
-          title: Text(
-            studentData.name,
-            style: TextStyle(color: Colors.black87),
-          ),
+        final userId = studentIds[index];
+        return ref.watch(userDataByEmailProvider(userId)).when(
+          data: (userData) =>
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(userData.imagePath),
+                  backgroundColor: Colors.transparent,
+                ),
+                title: Text(
+                    userData.name, style: TextStyle(color: Colors.black87)),
+              ),
+          loading: () =>
+              ListTile(leading: CircleAvatar(), title: Text('Loading...')),
+          error: (e, st) =>
+              ListTile(leading: CircleAvatar(), title: Text('Error: $e')),
         );
       },
     );
