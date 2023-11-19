@@ -22,8 +22,8 @@ class CustomBottomNavigationBar extends ConsumerWidget {
           label: 'Feed',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.live_tv),
-          label: 'Live',
+          icon: Icon(Icons.event), // Changed icon to represent events
+          label: 'Events', // Changed label to 'Events'
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.message),
