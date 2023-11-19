@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../Student_Profile_Page/Domain/user_db.dart';
+import '../../Student_Profile_Page/Domain/users_collection.dart';
 import 'edit_Item.dart';
 import 'edit_housesharing.dart';
 import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
 import 'package:connect_people/Features/MarketPlacePage/Data/housesharing_notifier.dart';
 import 'package:connect_people/Features/MarketPlacePage/Data/marketplace_notifier.dart';
+final UserDB userDB = UserDB();
 class MarketplacePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -131,7 +132,18 @@ class MarketplaceItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 20),
-            Text('Posted by: ${userDB.getUserName(author)}'),
+            FutureBuilder<String>(
+              future: userDB.getUserName(author),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Text('Loading...');
+                }
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+                return Text('Posted by: ${snapshot.data}');
+              },
+            ),
             Text('Price: $price'),
           ],
         ),

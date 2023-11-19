@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../Data/housesharing_notifier.dart';
-import '../Domain/housesharing.dart'; // Ensure this is correctly imported
-import '../../Student_Profile_Page/Domain/user_db.dart'; // Ensure this is correctly imported
+import '../Domain/housesharing.dart';  // Ensure this is correctly imported
 import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart'; // Ensure this is correctly imported
 
 class EditHouseSharingPage extends ConsumerWidget {

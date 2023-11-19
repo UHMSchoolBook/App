@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../Domain/clubfeed.dart';
 import '../Domain/clubfeed_collection.dart';
-import '../../Student_Profile_Page/Domain/user_db.dart';
 import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
 import 'package:connect_people/Features/Feed/Data/cfeed_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../Domain/clubfeed.dart';
 import '../Domain/clubfeed_collection.dart';
-import '../../Student_Profile_Page/Domain/user_db.dart';
 import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
 import 'package:connect_people/Features/Feed/Data/cfeed_notifier.dart';
 
