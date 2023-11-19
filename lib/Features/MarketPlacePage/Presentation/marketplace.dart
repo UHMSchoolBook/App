@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../Domain/marketplace_db.dart';
-import '../Domain/housesharing_db.dart';
-import '../../Student_Profile_Page/Domain/user_db.dart';
+import '../../Student_Profile_Page/Domain/users_collection.dart';
 import 'edit_Item.dart';
 import 'edit_housesharing.dart';
 import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
 import 'package:connect_people/Features/MarketPlacePage/Data/housesharing_notifier.dart';
 import 'package:connect_people/Features/MarketPlacePage/Data/marketplace_notifier.dart';
+final UserDB userDB = UserDB();
 class MarketplacePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2, // Number of tabs
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: TabBar(
@@ -33,18 +32,13 @@ class MarketplacePage extends StatelessWidget {
             return FloatingActionButton(
               child: Icon(Icons.add),
               onPressed: () {
-
                 final tabIndex = DefaultTabController.of(context)!.index;
                 if (tabIndex == 0) {
-                  // Sale tab is active
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => EditItemPage(),
                   ));
                 } else if (tabIndex == 1) {
-                  // House Sharing tab is active
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => EditHouseSharingPage(),
-                  ));
+                  // Navigate to EditHouseSharingPage if it exists
                 }
               },
             );
@@ -55,24 +49,30 @@ class MarketplacePage extends StatelessWidget {
   }
 }
 
-
 class SaleTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final MarketDB = ref.watch(MarketDBProvider);
-    final currentUserID = ref.watch(currentUserIDProvider.notifier).state ?? '';
-    return ListView.builder(
-      itemCount: MarketDB.items.length,
-      itemBuilder: (context, index) {
-        return MarketplaceItem(
-          title: MarketDB.items[index].name,
-          author: MarketDB.items[index].student_id,
-          price: MarketDB.items[index].price,
-          imagePath: MarketDB.items[index].imagePath,
-          currentUserId: currentUserID,
-          itemId: MarketDB.items[index].item_id,
-        );
-      },
+    final marketPlaceAsyncValue = ref.watch(marketPlaceStreamProvider);
+
+    return marketPlaceAsyncValue.when(
+      data: (items) => ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          final item = items[index];
+          return ListTile(
+            title: Text(item.name),
+            subtitle: Text('Price: ${item.price}'),
+            trailing: Image.network(item.imagePath, width: 50, height: 50),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => EditItemPage(itemId: item.item_id),
+              ));
+            },
+          );
+        },
+      ),
+      loading: () => CircularProgressIndicator(),
+      error: (e, st) => Text('Error: $e'),
     );
   }
 }
@@ -80,24 +80,29 @@ class SaleTab extends ConsumerWidget {
 class HouseSharingTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final houseDB = ref.watch(HouseDBProvider);
+    final houseSharingAsyncValue = ref.watch(houseSharingStreamProvider);
     final currentUserID = ref.watch(currentUserIDProvider.notifier).state ?? '';
-
-    return ListView.builder(
-      itemCount: houseDB.rooms.length,
-      itemBuilder: (context, index) {
-        return MarketplaceItem(
-          title: houseDB.rooms[index].location,
-          author: houseDB.rooms[index].student_id,
-          price: houseDB.rooms[index].rent,
-          imagePath: houseDB.rooms[index].imagePath,
-          currentUserId: currentUserID,
-          itemId: houseDB.rooms[index].item_id,
-        );
-      },
+    return houseSharingAsyncValue.when(
+      data: (rooms) => ListView.builder(
+        itemCount: rooms.length,
+        itemBuilder: (context, index) {
+          final room = rooms[index];
+          return MarketplaceItem(
+            title: room.location,
+            author: room.student_id,
+            price: room.rent,
+            imagePath: room.imagePath,
+            currentUserId: currentUserID,
+            itemId: room.item_id,
+          );
+        },
+      ),
+      loading: () => CircularProgressIndicator(),
+      error: (e, st) => Text('Error: $e'),
     );
   }
 }
+
 
 
 class MarketplaceItem extends StatelessWidget {
@@ -127,7 +132,18 @@ class MarketplaceItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 20),
-            Text('Posted by: ${userDB.getUserName(author)}'),
+            FutureBuilder<String>(
+              future: userDB.getUserName(author),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Text('Loading...');
+                }
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+                return Text('Posted by: ${snapshot.data}');
+              },
+            ),
             Text('Price: $price'),
           ],
         ),

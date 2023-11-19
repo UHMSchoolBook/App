@@ -6,7 +6,7 @@ import 'Features/Authentication/Data/authentication_notifier.dart';
 import 'Features/Authentication/Presentation/sign_in_view.dart';
 import 'Features/MessagesPage/Presentation/chat_screen.dart';
 import 'Features/Student_Profile_Page/Data/user_notifier.dart';
-import 'Features/Student_Profile_Page/Domain/user_db.dart';
+import 'Features/Student_Profile_Page/Domain/users_collection.dart';
 import 'Features/Student_Profile_Page/Presentation/student_ProfilePage.dart';
 import 'Features/Feed/Presentation/feed.dart';
 import 'Features/MarketPlacePage/Presentation/marketplace.dart';
@@ -22,7 +22,7 @@ class MyApp extends ConsumerWidget {
     return _auth.currentUser?.uid;
   }
   final selectedIndexProvider = StateProvider<int>((ref) => 0);
-
+  final UserDB userDB = UserDB();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeProvider);
@@ -31,6 +31,51 @@ class MyApp extends ConsumerWidget {
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: themeMode,
+      home: authState.when(
+        data: (user) {
+          if (user != null && user.email != null) {
+            return FutureBuilder<String?>(
+              future: userDB.getUserIDByEmail(user.email!),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return Scaffold(
+                      body: Center(child: Text('${snapshot.error}')),
+                    );
+                  }
+
+                  if (snapshot.hasData) {
+
+                    final userID = snapshot.data!;
+                    print("User ID: $userID");
+                    // Defer the state update to after the build process
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      ref.read(currentUserIDProvider.notifier).state = userID;
+                    });
+                    return AppWrapper(pages: [
+                      StudentProfilePage(),
+                      FeedPage(),
+                      LiveActivityPage(),
+                      ChatsScreen(),
+                      MarketplacePage(),
+                    ]);
+                  }
+                }
+                // Show loading indicator while waiting for the future to complete
+                return CircularProgressIndicator();
+              },
+            );
+          } else {
+            return SigninView();
+          }
+        },
+        loading: () => CircularProgressIndicator(),
+        error: (_, __) => Scaffold(
+          body: Center(
+            child: Text('Something went wrong!'),
+          ),
+        ),
+      ),
       routes: {
         //'/': (context) => SigninView(),
         '/register': (context) => SignUpPage(),
@@ -81,32 +126,6 @@ class MyApp extends ConsumerWidget {
           ],
         ),
       },
-      //initialRoute: '/',
-      home: authState.when(
-        data: (user) {
-          if (user != null && user.email != null) {
-            print("User Email: ${user.email}");
-            final userID = getCurrentUserId(); // Use the non-null assertion operator (!) after checking for null
-            ref.read(currentUserIDProvider.notifier).state = userID;
-            return AppWrapper(pages: [
-              StudentProfilePage(),
-              FeedPage(),
-              LiveActivityPage(),
-              ChatsScreen(),
-              MarketplacePage(),
-            ],);
-          } else {
-            return SigninView();
-          }
-        },
-        loading: () => CircularProgressIndicator(),
-        error: (_, __) => Scaffold(
-          body: Center(
-            child: Text('Something went wrong!'),
-          ),
-        ),
-      ),
-
 
     );
   }

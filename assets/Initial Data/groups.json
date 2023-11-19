@@ -1,0 +1,24 @@
+[
+  {
+    "group_id": "group-001",
+    "name": "Reading Group",
+    "student_ids": [
+      "rahat@test.com",
+      "user-002",
+      "test3@gmail.com"
+    ],
+    "description": "A group for book lovers to discuss and share their favorite reads."
+  },
+  {
+    "group_id": "group-002",
+    "name": "Programming Club",
+    "student_ids": [
+      "rahat@test.com",
+      "user-002",
+      "test3@gmail.com"
+    ],
+    "description": "A community of programming enthusiasts learning and sharing coding skills."
+
+  }
+
+]
