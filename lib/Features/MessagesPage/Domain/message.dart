@@ -50,12 +50,11 @@ class FirebaseFirestoreService {
     required String uid,
   }) async {
     final user = UserData(
-      id: uid,
       email: email,
       name: name,
       imagePath: image,
-      isOnline: true,
-      lastActive: DateTime.now(),
+      // isOnline: true,
+      // lastActive: DateTime.now(),
       bio: 'No bio provided',
     );
 

@@ -20,27 +20,6 @@ class _UsersSearchScreenState
     extends State<UsersSearchScreen> {
   final controller = TextEditingController();
 
-  final userData = [
-    UserData(
-      id: '1',
-      name: 'Hazy',
-      email: 'test@test.test',
-      imagePath: 'https://i.pravatar.cc/150?img=0',
-      isOnline: true,
-      lastActive: DateTime.now(),
-      bio: "bio is not provided"
-    ),
-    UserData(
-      id: '1',
-      name: 'Charlotte',
-      email: 'test@test.test',
-      imagePath: 'https://i.pravatar.cc/150?img=1',
-      isOnline: false,
-      lastActive: DateTime.now(),
-      bio: "bio is not provided"
-    ),
-  ];
-
   @override
   void dispose() {
     controller.dispose();
@@ -83,9 +62,9 @@ class _UsersSearchScreenState
                     padding: const EdgeInsets.all(16),
                     itemCount: value.search.length,
                     itemBuilder: (context, index) =>
-                    value.search[index].id !=
+                    value.search[index].email !=
                         FirebaseAuth.instance
-                            .currentUser?.uid
+                            .currentUser?.email
                         ? UserItem(
                         user: value
                             .search[index])

@@ -74,13 +74,13 @@ class _ChatScreenState extends State<ChatScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
-                    userdata.isOnline ? 'Online' : 'Offline',
-                    style: TextStyle(
-                      color: userdata.isOnline ? Colors.green : Colors.grey,
-                      fontSize: 14,
-                    ),
-                  ),
+                  // Text(
+                  //   userdata.isOnline ? 'Online' : 'Offline',
+                  //   style: TextStyle(
+                  //     color: userdata.isOnline ? Colors.green : Colors.grey,
+                  //     fontSize: 14,
+                  //   ),
+                  // ),
                 ],
               ),
             ],

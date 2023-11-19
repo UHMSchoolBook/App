@@ -20,13 +20,10 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserData {
-  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get imagePath => throw _privateConstructorUsedError;
   String get bio => throw _privateConstructorUsedError;
-  bool get isOnline => throw _privateConstructorUsedError;
-  DateTime get lastActive => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,14 +36,7 @@ abstract class $UserDataCopyWith<$Res> {
   factory $UserDataCopyWith(UserData value, $Res Function(UserData) then) =
       _$UserDataCopyWithImpl<$Res, UserData>;
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      String email,
-      String imagePath,
-      String bio,
-      bool isOnline,
-      DateTime lastActive});
+  $Res call({String name, String email, String imagePath, String bio});
 }
 
 /// @nodoc
@@ -62,19 +52,12 @@ class _$UserDataCopyWithImpl<$Res, $Val extends UserData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? name = null,
     Object? email = null,
     Object? imagePath = null,
     Object? bio = null,
-    Object? isOnline = null,
-    Object? lastActive = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -91,14 +74,6 @@ class _$UserDataCopyWithImpl<$Res, $Val extends UserData>
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String,
-      isOnline: null == isOnline
-          ? _value.isOnline
-          : isOnline // ignore: cast_nullable_to_non_nullable
-              as bool,
-      lastActive: null == lastActive
-          ? _value.lastActive
-          : lastActive // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ) as $Val);
   }
 }
@@ -111,14 +86,7 @@ abstract class _$$UserDataImplCopyWith<$Res>
       __$$UserDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      String email,
-      String imagePath,
-      String bio,
-      bool isOnline,
-      DateTime lastActive});
+  $Res call({String name, String email, String imagePath, String bio});
 }
 
 /// @nodoc
@@ -132,19 +100,12 @@ class __$$UserDataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? name = null,
     Object? email = null,
     Object? imagePath = null,
     Object? bio = null,
-    Object? isOnline = null,
-    Object? lastActive = null,
   }) {
     return _then(_$UserDataImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -161,14 +122,6 @@ class __$$UserDataImplCopyWithImpl<$Res>
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String,
-      isOnline: null == isOnline
-          ? _value.isOnline
-          : isOnline // ignore: cast_nullable_to_non_nullable
-              as bool,
-      lastActive: null == lastActive
-          ? _value.lastActive
-          : lastActive // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ));
   }
 }
@@ -177,19 +130,14 @@ class __$$UserDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserDataImpl implements _UserData {
   const _$UserDataImpl(
-      {required this.id,
-      required this.name,
+      {required this.name,
       required this.email,
       required this.imagePath,
-      required this.bio,
-      required this.isOnline,
-      required this.lastActive});
+      required this.bio});
 
   factory _$UserDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserDataImplFromJson(json);
 
-  @override
-  final String id;
   @override
   final String name;
   @override
@@ -198,14 +146,10 @@ class _$UserDataImpl implements _UserData {
   final String imagePath;
   @override
   final String bio;
-  @override
-  final bool isOnline;
-  @override
-  final DateTime lastActive;
 
   @override
   String toString() {
-    return 'UserData(id: $id, name: $name, email: $email, imagePath: $imagePath, bio: $bio, isOnline: $isOnline, lastActive: $lastActive)';
+    return 'UserData(name: $name, email: $email, imagePath: $imagePath, bio: $bio)';
   }
 
   @override
@@ -213,22 +157,16 @@ class _$UserDataImpl implements _UserData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserDataImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.imagePath, imagePath) ||
                 other.imagePath == imagePath) &&
-            (identical(other.bio, bio) || other.bio == bio) &&
-            (identical(other.isOnline, isOnline) ||
-                other.isOnline == isOnline) &&
-            (identical(other.lastActive, lastActive) ||
-                other.lastActive == lastActive));
+            (identical(other.bio, bio) || other.bio == bio));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, name, email, imagePath, bio, isOnline, lastActive);
+  int get hashCode => Object.hash(runtimeType, name, email, imagePath, bio);
 
   @JsonKey(ignore: true)
   @override
@@ -246,19 +184,14 @@ class _$UserDataImpl implements _UserData {
 
 abstract class _UserData implements UserData {
   const factory _UserData(
-      {required final String id,
-      required final String name,
+      {required final String name,
       required final String email,
       required final String imagePath,
-      required final String bio,
-      required final bool isOnline,
-      required final DateTime lastActive}) = _$UserDataImpl;
+      required final String bio}) = _$UserDataImpl;
 
   factory _UserData.fromJson(Map<String, dynamic> json) =
       _$UserDataImpl.fromJson;
 
-  @override
-  String get id;
   @override
   String get name;
   @override
@@ -267,10 +200,6 @@ abstract class _UserData implements UserData {
   String get imagePath;
   @override
   String get bio;
-  @override
-  bool get isOnline;
-  @override
-  DateTime get lastActive;
   @override
   @JsonKey(ignore: true)
   _$$UserDataImplCopyWith<_$UserDataImpl> get copyWith =>

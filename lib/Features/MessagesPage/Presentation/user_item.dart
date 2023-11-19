@@ -25,7 +25,7 @@ class _UserItemState extends State<UserItem> {
     onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
             builder: (_) =>
-                ChatScreen(userId: widget.user.id))),
+                ChatScreen(userId: widget.user.email))),
     child: ListTile(
       contentPadding: EdgeInsets.zero,
       leading: Stack(
@@ -38,12 +38,12 @@ class _UserItemState extends State<UserItem> {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: CircleAvatar(
-              backgroundColor: widget.user.isOnline
-                  ? Colors.green
-                  : Colors.grey,
-              radius: 5,
-            ),
+            // child: CircleAvatar(
+            //   backgroundColor: widget.user.isOnline
+            //       ? Colors.green
+            //       : Colors.grey,
+            //   radius: 5,
+            // ),
           ),
         ],
       ),
@@ -55,15 +55,15 @@ class _UserItemState extends State<UserItem> {
           fontWeight: FontWeight.bold,
         ),
       ),
-      subtitle: Text(
-        'Last Active : ${timeago.format(widget.user.lastActive)}',
-        maxLines: 2,
-        style: const TextStyle(
-          color: mainColor,
-          fontSize: 15,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
+      // subtitle: Text(
+      //   'Last Active : ${timeago.format(widget.user.lastActive)}',
+      //   maxLines: 2,
+      //   style: const TextStyle(
+      //     color: mainColor,
+      //     fontSize: 15,
+      //     overflow: TextOverflow.ellipsis,
+      //   ),
+      // ),
     ),
   );
 }

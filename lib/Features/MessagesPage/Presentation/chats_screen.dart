@@ -58,45 +58,6 @@ class _ChatsScreenState extends State<ChatsScreen>
     super.dispose();
   }
 
-  final userData = [
-    UserData(
-      id: '1',
-      name: 'Hazy',
-      email: 'test@test.test',
-      imagePath: 'https://i.pravatar.cc/150?img=0',
-      isOnline: true,
-      lastActive: DateTime.now(),
-      bio: "bio is not provided"
-    ),
-    UserData(
-      id: '1',
-      name: 'Charlotte',
-      email: 'test@test.test',
-      imagePath: 'https://i.pravatar.cc/150?img=1',
-      isOnline: false,
-      lastActive: DateTime.now(),
-      bio: "bio is not provided"
-    ),
-    UserData(
-      id: '2',
-      name: 'Ahmed',
-      email: 'test@test.test',
-      imagePath: 'https://i.pravatar.cc/150?img=2',
-      isOnline: true,
-      lastActive: DateTime.now(),
-      bio: "bio is not provided"
-    ),
-    UserData(
-      id: '3',
-      name: 'Prateek',
-      email: 'test@test.test',
-      imagePath: 'https://i.pravatar.cc/150?img=3',
-      isOnline: false,
-      lastActive: DateTime.now(),
-      bio: "bio is not provided"
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
@@ -128,8 +89,8 @@ class _ChatsScreenState extends State<ChatsScreen>
             const SizedBox(height: 10),
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) => value
-                .users[index].id !=
-                FirebaseAuth.instance.currentUser?.uid
+                .users[index].email !=
+                FirebaseAuth.instance.currentUser?.email
                 ? UserItem(user: value.users[index])
                 : const SizedBox(),
           );
