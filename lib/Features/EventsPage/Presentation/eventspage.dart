@@ -14,7 +14,6 @@ class EventsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Calendar App')),
       body: EventCalendar(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _navigateToAddEvent(context),
@@ -86,9 +85,9 @@ class _EventCalendarState extends State<EventCalendar> {
                     });
                   },
                     eventLoader: (day) => events[day] ?? [],
-              calendarStyle: const CalendarStyle(
-                weekendTextStyle: TextStyle(
-                  color: Colors.red,
+                    calendarStyle: const CalendarStyle(
+                    weekendTextStyle: TextStyle(
+                    color: Colors.red,
                 ),
                 selectedDecoration: BoxDecoration(
                   shape: BoxShape.rectangle,

@@ -22,6 +22,7 @@ Event _$EventFromJson(Map<String, dynamic> json) {
 mixin _$Event {
   String get title => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  @TimestampConverter()
   DateTime get date => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   String get student_id => throw _privateConstructorUsedError;
@@ -39,7 +40,7 @@ abstract class $EventCopyWith<$Res> {
   $Res call(
       {String title,
       String? description,
-      DateTime date,
+      @TimestampConverter() DateTime date,
       String id,
       String student_id});
 }
@@ -98,7 +99,7 @@ abstract class _$$EventImplCopyWith<$Res> implements $EventCopyWith<$Res> {
   $Res call(
       {String title,
       String? description,
-      DateTime date,
+      @TimestampConverter() DateTime date,
       String id,
       String student_id});
 }
@@ -151,7 +152,7 @@ class _$EventImpl implements _Event {
   const _$EventImpl(
       {required this.title,
       this.description,
-      required this.date,
+      @TimestampConverter() required this.date,
       required this.id,
       required this.student_id});
 
@@ -163,6 +164,7 @@ class _$EventImpl implements _Event {
   @override
   final String? description;
   @override
+  @TimestampConverter()
   final DateTime date;
   @override
   final String id;
@@ -211,7 +213,7 @@ abstract class _Event implements Event {
   const factory _Event(
       {required final String title,
       final String? description,
-      required final DateTime date,
+      @TimestampConverter() required final DateTime date,
       required final String id,
       required final String student_id}) = _$EventImpl;
 
@@ -222,6 +224,7 @@ abstract class _Event implements Event {
   @override
   String? get description;
   @override
+  @TimestampConverter()
   DateTime get date;
   @override
   String get id;

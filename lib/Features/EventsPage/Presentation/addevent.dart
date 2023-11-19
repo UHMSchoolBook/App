@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connect_people/Features/EventsPage/Domain/events.dart';
 import 'package:connect_people/Features/EventsPage/Data/event_provider.dart';
 import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
+
 class AddEvent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,6 +34,7 @@ class _EventFormState extends ConsumerState<EventForm> {// Change to ConsumerSta
   final _titleController = TextEditingController();
   final _descController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
+  final _dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +43,26 @@ class _EventFormState extends ConsumerState<EventForm> {// Change to ConsumerSta
     return ListView(
       padding: const EdgeInsets.all(16.0),
       children: [
-        InputDatePickerFormField(
-          firstDate: DateTime.now().subtract(const Duration(days: 365)),
-          lastDate: DateTime.now().add(const Duration(days: 365)),
-          initialDate: _selectedDate,
-          onDateSubmitted: (date) {
-            setState(() {
-              _selectedDate = date;
-            });
+        TextFormField(
+          controller: _dateController,
+          decoration: const InputDecoration(
+            labelText: 'Date',
+            border: OutlineInputBorder(),
+          ),
+          readOnly: true, // Make it read-only
+          onTap: () async {
+            DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: _selectedDate,
+              firstDate: DateTime.now().subtract(const Duration(days: 365)),
+              lastDate: DateTime.now().add(const Duration(days: 365)),
+            );
+            if (pickedDate != null && pickedDate != _selectedDate) {
+              setState(() {
+                _selectedDate = pickedDate;
+                _dateController.text = DateFormat('yyyy-MM-dd').format(pickedDate); // Format the date as you need
+              });
+            }
           },
         ),
         const SizedBox(height: 10),

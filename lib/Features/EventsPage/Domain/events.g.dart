@@ -9,7 +9,7 @@ part of 'events.dart';
 _$EventImpl _$$EventImplFromJson(Map<String, dynamic> json) => _$EventImpl(
       title: json['title'] as String,
       description: json['description'] as String?,
-      date: DateTime.parse(json['date'] as String),
+      date: const TimestampConverter().fromJson(json['date'] as Timestamp),
       id: json['id'] as String,
       student_id: json['student_id'] as String,
     );
@@ -18,7 +18,7 @@ Map<String, dynamic> _$$EventImplToJson(_$EventImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
-      'date': instance.date.toIso8601String(),
+      'date': const TimestampConverter().toJson(instance.date),
       'id': instance.id,
       'student_id': instance.student_id,
     };

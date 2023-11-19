@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:connect_people/Features/EventsPage/Domain/events.dart';
 import 'package:connect_people/Features/EventsPage/Data/event_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EventItem extends StatelessWidget {
+import '../../Student_Profile_Page/Data/user_notifier.dart';
+
+class EventItem extends ConsumerWidget {
   final Event event;
   final VoidCallback onDelete;
   final VoidCallback? onTap;
@@ -16,15 +19,28 @@ class EventItem extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentUserID = ref.watch(currentUserIDProvider);
+
     return ListTile(
       title: Text(event.title),
-      subtitle: Text(event.date.toString()),
+      subtitle: Text('${event.date} - ${event.description ?? ""}'),
       onTap: onTap,
-      trailing: IconButton(
-        icon: const Icon(Icons.delete),
-        onPressed: onDelete,
-      ),
+      trailing: currentUserID == event.student_id
+          ? Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: onTap,
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: onDelete,
+          ),
+        ],
+      )
+          : null,
     );
   }
 }
