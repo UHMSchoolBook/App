@@ -38,7 +38,9 @@ class MarketplacePage extends StatelessWidget {
                     builder: (context) => EditItemPage(),
                   ));
                 } else if (tabIndex == 1) {
-                  // Navigate to EditHouseSharingPage if it exists
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => EditHouseSharingPage(),
+                  ));
                 }
               },
             );
@@ -53,21 +55,21 @@ class SaleTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final marketPlaceAsyncValue = ref.watch(marketPlaceStreamProvider);
+    final currentUserID = ref.watch(currentUserIDProvider.notifier).state ?? '';
 
     return marketPlaceAsyncValue.when(
       data: (items) => ListView.builder(
         itemCount: items.length,
         itemBuilder: (context, index) {
           final item = items[index];
-          return ListTile(
-            title: Text(item.name),
-            subtitle: Text('Price: ${item.price}'),
-            trailing: Image.network(item.imagePath, width: 50, height: 50),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => EditItemPage(itemId: item.item_id),
-              ));
-            },
+          return MarketplaceItem(
+            title: item.name,
+            author: item.student_id, // Assuming each item has a 'student_id' field
+            price: item.price.toString(),
+            imagePath: item.imagePath,
+            currentUserId: currentUserID,
+            itemId: item.item_id,
+            isSaleItem: true,
           );
         },
       ),
@@ -76,6 +78,7 @@ class SaleTab extends ConsumerWidget {
     );
   }
 }
+
 
 class HouseSharingTab extends ConsumerWidget {
   @override
@@ -94,6 +97,7 @@ class HouseSharingTab extends ConsumerWidget {
             imagePath: room.imagePath,
             currentUserId: currentUserID,
             itemId: room.item_id,
+            isSaleItem: false,
           );
         },
       ),
@@ -112,6 +116,7 @@ class MarketplaceItem extends StatelessWidget {
   final String imagePath;
   final String currentUserId;
   final String itemId;
+  final bool isSaleItem;
 
   MarketplaceItem({
     required this.title,
@@ -120,48 +125,47 @@ class MarketplaceItem extends StatelessWidget {
     required this.imagePath,
     required this.currentUserId,
     required this.itemId,
+    required this.isSaleItem,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(10),
-      child: ListTile(
-        title: Text(title),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 20),
-            FutureBuilder<String>(
-              future: userDB.getUserName(author),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Text('Loading...');
-                }
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                }
-                return Text('Posted by: ${snapshot.data}');
-              },
-            ),
-            Text('Price: $price'),
-          ],
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.network(
-              imagePath,
-              width: 60,
-              height: 60,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(width: 10),
-            if (currentUserId == author)
-              PopupMenuButton<String>(
-                onSelected: (value) {
-                  if (value == 'edit') {
-                    if (itemId.startsWith('item-')) {
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListTile(
+            title: Text(title),
+            subtitle: Text('Price: $price'),
+          ),
+          Image.network(
+            imagePath,
+            width: 70,
+            height: 70,
+            fit: BoxFit.cover,
+          ),
+          FutureBuilder<String>(
+            future: userDB.getUserName(author),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Text('Loading...');
+              }
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+              return Text('Posted by: ${snapshot.data}');
+            },
+          ),
+          if (currentUserId == author)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    // Check if the item is a sale item
+                    if (isSaleItem) {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => EditItemPage(itemId: itemId),
                       ));
@@ -170,19 +174,13 @@ class MarketplaceItem extends StatelessWidget {
                         builder: (context) => EditHouseSharingPage(roomId: itemId),
                       ));
                     }
-                  }
-                },
-                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                  const PopupMenuItem<String>(
-                    value: 'edit',
-                    child: Text('Edit'),
-                  ),
-                ],
-              ),
-          ],
-        ),
+                  },
+                ),
+
+              ],
+            ),
+        ],
       ),
     );
   }
 }
-

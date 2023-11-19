@@ -8,7 +8,7 @@ class AppWrapper extends ConsumerWidget {
   final List<String> sectionTitles = [
     'Profile',
     'Feed',
-    'Live',
+    'Events',
     'Messages',
     'Marketplace',
   ];
