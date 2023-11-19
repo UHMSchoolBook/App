@@ -1,4 +1,4 @@
-import 'package:connect_people/Features/Student_Profile_Page/Domain/user_db.dart';
+import 'package:connect_people/Features/Student_Profile_Page/Domain/users.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../Domain/users_collection.dart';
 

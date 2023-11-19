@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../Student_Profile_Page/Domain/user_db.dart';
-import '../Domain/message.dart';
+import '../../Student_Profile_Page/Domain/users.dart';
+import '../Domain/messages.dart';
 import 'custom_text_field.dart';
 import 'empty_widget.dart';
 

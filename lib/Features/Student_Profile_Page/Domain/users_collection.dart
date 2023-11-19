@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:connect_people/Features/Student_Profile_Page/Domain/user_db.dart';
+import 'package:connect_people/Features/Student_Profile_Page/Domain/users.dart';
 
 class UserDB {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

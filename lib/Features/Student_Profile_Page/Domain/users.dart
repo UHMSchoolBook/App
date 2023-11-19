@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 /// The data associated with users.
-part 'user_db.freezed.dart';
-part 'user_db.g.dart';
+part 'users.freezed.dart';
+part 'users.g.dart';
 
 @freezed
 class UserData with _$UserData {

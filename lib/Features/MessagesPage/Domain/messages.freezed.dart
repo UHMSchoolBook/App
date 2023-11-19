@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'message.dart';
+part of 'messages.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -20,11 +20,11 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Message {
-  String get senderId => throw _privateConstructorUsedError;
-  String get receiverId => throw _privateConstructorUsedError;
+  String? get senderId => throw _privateConstructorUsedError;
+  String? get receiverId => throw _privateConstructorUsedError;
   DateTime get sentTime => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
-  MessageType get messageType => throw _privateConstructorUsedError;
+  String get messageType => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,11 +37,11 @@ abstract class $MessageCopyWith<$Res> {
       _$MessageCopyWithImpl<$Res, Message>;
   @useResult
   $Res call(
-      {String senderId,
-      String receiverId,
+      {String? senderId,
+      String? receiverId,
       DateTime sentTime,
       String content,
-      MessageType messageType});
+      String messageType});
 }
 
 /// @nodoc
@@ -57,21 +57,21 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? senderId = null,
-    Object? receiverId = null,
+    Object? senderId = freezed,
+    Object? receiverId = freezed,
     Object? sentTime = null,
     Object? content = null,
     Object? messageType = null,
   }) {
     return _then(_value.copyWith(
-      senderId: null == senderId
+      senderId: freezed == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
-              as String,
-      receiverId: null == receiverId
+              as String?,
+      receiverId: freezed == receiverId
           ? _value.receiverId
           : receiverId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       sentTime: null == sentTime
           ? _value.sentTime
           : sentTime // ignore: cast_nullable_to_non_nullable
@@ -83,7 +83,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
       messageType: null == messageType
           ? _value.messageType
           : messageType // ignore: cast_nullable_to_non_nullable
-              as MessageType,
+              as String,
     ) as $Val);
   }
 }
@@ -96,11 +96,11 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String senderId,
-      String receiverId,
+      {String? senderId,
+      String? receiverId,
       DateTime sentTime,
       String content,
-      MessageType messageType});
+      String messageType});
 }
 
 /// @nodoc
@@ -114,21 +114,21 @@ class __$$MessageImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? senderId = null,
-    Object? receiverId = null,
+    Object? senderId = freezed,
+    Object? receiverId = freezed,
     Object? sentTime = null,
     Object? content = null,
     Object? messageType = null,
   }) {
     return _then(_$MessageImpl(
-      senderId: null == senderId
+      senderId: freezed == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
-              as String,
-      receiverId: null == receiverId
+              as String?,
+      receiverId: freezed == receiverId
           ? _value.receiverId
           : receiverId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       sentTime: null == sentTime
           ? _value.sentTime
           : sentTime // ignore: cast_nullable_to_non_nullable
@@ -140,7 +140,7 @@ class __$$MessageImplCopyWithImpl<$Res>
       messageType: null == messageType
           ? _value.messageType
           : messageType // ignore: cast_nullable_to_non_nullable
-              as MessageType,
+              as String,
     ));
   }
 }
@@ -159,15 +159,15 @@ class _$MessageImpl implements _Message {
       _$$MessageImplFromJson(json);
 
   @override
-  final String senderId;
+  final String? senderId;
   @override
-  final String receiverId;
+  final String? receiverId;
   @override
   final DateTime sentTime;
   @override
   final String content;
   @override
-  final MessageType messageType;
+  final String messageType;
 
   @override
   String toString() {
@@ -211,24 +211,24 @@ class _$MessageImpl implements _Message {
 
 abstract class _Message implements Message {
   const factory _Message(
-      {required final String senderId,
-      required final String receiverId,
+      {required final String? senderId,
+      required final String? receiverId,
       required final DateTime sentTime,
       required final String content,
-      required final MessageType messageType}) = _$MessageImpl;
+      required final String messageType}) = _$MessageImpl;
 
   factory _Message.fromJson(Map<String, dynamic> json) = _$MessageImpl.fromJson;
 
   @override
-  String get senderId;
+  String? get senderId;
   @override
-  String get receiverId;
+  String? get receiverId;
   @override
   DateTime get sentTime;
   @override
   String get content;
   @override
-  MessageType get messageType;
+  String get messageType;
   @override
   @JsonKey(ignore: true)
   _$$MessageImplCopyWith<_$MessageImpl> get copyWith =>

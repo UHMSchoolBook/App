@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../Student_Profile_Page/Domain/user_db.dart';
-import '../Domain/message.dart';
+import '../../Student_Profile_Page/Domain/users.dart';
+import '../Domain/messages.dart';
 import 'chat_messages.dart';
 import 'chat_text_field.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key, required this.userId});
 
-  final String userId;
+  final String? userId;
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -53,9 +53,13 @@ class _ChatScreenState extends State<ChatScreen> {
             return CircularProgressIndicator();
           }
           if (snapshot.hasError || snapshot.data == null) {
+            // print(widget.userId);
             return Text("User not found");
           }
           UserData? userdata = snapshot.data;
+          print("*********************");
+          print(userdata?.email);
+          print("**********************");
           return userdata != null ? Row(
             children: [
               CircleAvatar(

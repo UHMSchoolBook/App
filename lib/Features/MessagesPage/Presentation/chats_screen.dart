@@ -1,11 +1,11 @@
 import 'package:connect_people/Features/MessagesPage/Presentation/search_screen.dart';
 import 'package:connect_people/Features/MessagesPage/Presentation/user_item.dart';
-import 'package:connect_people/Features/Student_Profile_Page/Domain/user_db.dart';
+import 'package:connect_people/Features/Student_Profile_Page/Domain/users.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../Domain/message.dart';
+import '../Domain/messages.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});

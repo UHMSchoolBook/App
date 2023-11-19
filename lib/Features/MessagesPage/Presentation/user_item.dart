@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:timeago/timeago.dart' as timeago;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../Student_Profile_Page/Domain/user_db.dart';
+import '../../Student_Profile_Page/Data/user_notifier.dart';
+import '../../Student_Profile_Page/Domain/users.dart';
 import 'chat_screen.dart';
-import 'constant.dart';
+import '../../Student_Profile_Page/Domain/users_collection.dart';
 
 class UserItem extends StatefulWidget {
-  const UserItem({super.key, required this.user});
+  const UserItem({Key? key, required this.user}) : super(key: key);
 
   final UserData user;
 
@@ -15,55 +16,39 @@ class UserItem extends StatefulWidget {
 }
 
 class _UserItemState extends State<UserItem> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  final UserDB userDB = UserDB();
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-    onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (_) =>
-                ChatScreen(userId: widget.user.email))),
-    child: ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Stack(
-        alignment: Alignment.bottomRight,
-        children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundImage:
-            NetworkImage(widget.user.imagePath),
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        // Fetch the userId asynchronously
+        final userId = await userDB.getUserIDByEmail(widget.user.email);
+        if (userId != null) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => ChatScreen(userId: userId),
+            ),
+          );
+        } else {
+          // Handle the case where userId is null
+        }
+      },
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        leading: CircleAvatar(
+          radius: 30,
+          backgroundImage: NetworkImage(widget.user.imagePath),
+        ),
+        title: Text(
+          widget.user.name,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            // child: CircleAvatar(
-            //   backgroundColor: widget.user.isOnline
-            //       ? Colors.green
-            //       : Colors.grey,
-            //   radius: 5,
-            // ),
-          ),
-        ],
-      ),
-      title: Text(
-        widget.user.name,
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
         ),
       ),
-      // subtitle: Text(
-      //   'Last Active : ${timeago.format(widget.user.lastActive)}',
-      //   maxLines: 2,
-      //   style: const TextStyle(
-      //     color: mainColor,
-      //     fontSize: 15,
-      //     overflow: TextOverflow.ellipsis,
-      //   ),
-      // ),
-    ),
-  );
+    );
+  }
 }

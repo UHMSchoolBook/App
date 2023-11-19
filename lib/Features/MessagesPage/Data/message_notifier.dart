@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../Domain/message.dart';  // Adjust the import path as needed
+import '../Domain/messages.dart';  // Adjust the import path as needed
 
 class MessageNotifier extends StateNotifier<List<Message>> {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;

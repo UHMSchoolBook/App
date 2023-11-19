@@ -10,36 +10,27 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
+import "dart:developer";
 
-import '../../Student_Profile_Page/Domain/user_db.dart';
+import '../../Student_Profile_Page/Domain/users.dart';
 import '../Presentation/chat_screen.dart';
 
-part 'message.freezed.dart';
-part 'message.g.dart';
+part 'messages.freezed.dart';
+part 'messages.g.dart';
 
 @freezed
 class Message with _$Message {
   const factory Message({
-    required String senderId,
-    required String receiverId,
+    required String? senderId,
+    required String? receiverId,
     required DateTime sentTime,
     required String content,
-    required MessageType messageType,
+    required String messageType, // Now a String instead of an enum
   }) = _Message;
 
-  factory Message.fromJson(Map<String, dynamic> json) =>
-      _$MessageFromJson(json);
+  factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
 }
 
-enum MessageType {
-  text,
-  image;
-
-  String toJson() => name;
-
-  factory MessageType.fromJson(String json) =>
-      MessageType.values.byName(json);
-}
 class FirebaseFirestoreService {
   static final firestore = FirebaseFirestore.instance;
 
@@ -66,37 +57,37 @@ class FirebaseFirestoreService {
 
   static Future<void> addTextMessage({
     required String content,
-    required String receiverId,
+    required String? receiverId,
   }) async {
     final message = Message(
       content: content,
       sentTime: DateTime.now(),
       receiverId: receiverId,
-      messageType: MessageType.text,
+      messageType: "text", // Use a string to represent the message type
       senderId: FirebaseAuth.instance.currentUser!.uid,
     );
     await _addMessageToChat(receiverId, message);
   }
 
   static Future<void> addImageMessage({
-    required String receiverId,
+    required String? receiverId,
     required Uint8List file,
   }) async {
-    final image = await FirebaseStorageService.uploadImage(
+    final imageUrl = await FirebaseStorageService.uploadImage(
         file, 'image/chat/${DateTime.now()}');
 
     final message = Message(
-      content: image,
+      content: imageUrl,
       sentTime: DateTime.now(),
       receiverId: receiverId,
-      messageType: MessageType.image,
+      messageType: "image", // Use a string to represent the message type
       senderId: FirebaseAuth.instance.currentUser!.uid,
     );
     await _addMessageToChat(receiverId, message);
   }
 
   static Future<void> _addMessageToChat(
-      String receiverId,
+      String? receiverId,
       Message message,
       ) async {
     await firestore
@@ -158,9 +149,12 @@ class FirebaseProvider extends ChangeNotifier {
     return users;
   }
 
-  Future<UserData?> getUserById(String userId) async {
+  Future<UserData?> getUserById(String? userId) async {
     try {
-      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
       if (snapshot.exists && snapshot.data() != null) {
         user = UserData.fromJson(snapshot.data() as Map<String, dynamic>);
         notifyListeners();
@@ -176,7 +170,7 @@ class FirebaseProvider extends ChangeNotifier {
   }
 
 
-  List<Message> getMessages(String receiverId) {
+  List<Message> getMessages(String? receiverId) {
     FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)

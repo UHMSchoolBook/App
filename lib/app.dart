@@ -1,4 +1,5 @@
 import 'package:connect_people/Features/Authentication/Presentation/register.dart';
+import 'package:connect_people/Features/MessagesPage/Presentation/Messenger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,19 +15,21 @@ import 'Features/Common/appwrapper.dart';
 import 'Features/MessagesPage/Presentation/chats_screen.dart';
 import 'Features/LivePage/Presentation/livepage.dart';
 import 'Features/Settings/Presentation/settings_page.dart';
+import 'main.dart';
 
 class MyApp extends ConsumerWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  String? getCurrentUserId() {
-    return _auth.currentUser?.uid;
-  }
+  // String? getCurrentUserId() {
+  //   return _auth.currentUser?.uid;
+  // }
   final selectedIndexProvider = StateProvider<int>((ref) => 0);
   final UserDB userDB = UserDB();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeProvider);
     final authState = ref.watch(authStateChangesProvider);
+    final firebaseProviderInstance = ref.watch(firebaseProvider);
     return MaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
@@ -56,7 +59,7 @@ class MyApp extends ConsumerWidget {
                       StudentProfilePage(),
                       FeedPage(),
                       LiveActivityPage(),
-                      ChatsScreen(),
+                      Messenger(),
                       MarketplacePage(),
                     ]);
                   }
@@ -85,7 +88,7 @@ class MyApp extends ConsumerWidget {
             StudentProfilePage(),
             FeedPage(),
             LiveActivityPage(),
-            ChatsScreen(),
+            Messenger(),
             MarketplacePage(),
           ],
         ),
@@ -94,7 +97,7 @@ class MyApp extends ConsumerWidget {
             StudentProfilePage(),
             FeedPage(),
             LiveActivityPage(),
-            ChatsScreen(),
+            Messenger(),
             MarketplacePage(),
           ],
         ),
@@ -103,7 +106,7 @@ class MyApp extends ConsumerWidget {
             StudentProfilePage(),
             FeedPage(),
             LiveActivityPage(),
-            ChatsScreen(),
+            Messenger(),
             MarketplacePage(),
           ],
         ),
@@ -112,7 +115,7 @@ class MyApp extends ConsumerWidget {
             StudentProfilePage(),
             FeedPage(),
             LiveActivityPage(),
-            ChatsScreen(),
+            Messenger(),
             MarketplacePage(),
           ],
         ),
@@ -121,7 +124,7 @@ class MyApp extends ConsumerWidget {
             StudentProfilePage(),
             FeedPage(),
             LiveActivityPage(),
-            ChatsScreen(),
+            Messenger(),
             MarketplacePage(),
           ],
         ),

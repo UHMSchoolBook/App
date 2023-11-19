@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../Domain/message.dart';
+import '../Domain/messages.dart';
 import 'constant.dart';
 import 'custom_text_field.dart';
 
@@ -9,7 +9,7 @@ class ChatTextField extends StatefulWidget {
   const ChatTextField(
       {super.key, required this.receiverId});
 
-  final String receiverId;
+  final String? receiverId;
 
   @override
   State<ChatTextField> createState() =>
@@ -68,10 +68,13 @@ class _ChatTextFieldState extends State<ChatTextField> {
   );
 
   Future<void> _sendText(BuildContext context) async {
+    print("kheili khari");
+    print("####################");
+    print(controller.text);
     if (controller.text.isNotEmpty) {
       await FirebaseFirestoreService.addTextMessage(
         receiverId: widget.receiverId,
-        content: controller.text,
+        content: controller.text
       );
       await notificationsService.sendNotification(
         body: controller.text,

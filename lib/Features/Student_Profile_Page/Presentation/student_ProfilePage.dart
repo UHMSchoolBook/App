@@ -10,7 +10,7 @@ import '../../Feed/Presentation/feed.dart';
 import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
 import '../../CoursesPaage/Domain/courses.dart';
 import '../../CoursesPaage/Data/coursesProvider.dart';
-import '../Domain/user_db.dart';
+import '../Domain/users.dart';
 
 class StudentProfilePage extends ConsumerWidget {
   @override
