@@ -16,7 +16,6 @@ import 'Features/Common/appwrapper.dart';
 import 'Features/MessagesPage/Presentation/chats_screen.dart';
 import 'Features/Settings/Presentation/settings_page.dart';
 import 'main.dart';
-
 class MyApp extends ConsumerWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -65,14 +64,14 @@ class MyApp extends ConsumerWidget {
                   }
                 }
                 // Show loading indicator while waiting for the future to complete
-                return CircularProgressIndicator();
+                return Center(child: CircularProgressIndicator());
               },
             );
           } else {
             return SigninView();
           }
         },
-        loading: () => CircularProgressIndicator(),
+        loading: () => Center(child: CircularProgressIndicator()),
         error: (_, __) => Scaffold(
           body: Center(
             child: Text('Something went wrong!'),
