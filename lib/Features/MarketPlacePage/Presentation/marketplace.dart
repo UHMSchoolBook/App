@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../Common/appwrapper.dart';
 import '../../MessagesPage/Domain/messages.dart';
 import '../../MessagesPage/Presentation/Messenger.dart';
 import '../../MessagesPage/Presentation/chat_screen.dart';
@@ -167,7 +168,7 @@ class MarketplaceItem extends StatelessWidget {
                     Spacer(),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
+                        navigatorKey.currentState!.push(MaterialPageRoute(
                           builder: (context) => ChatScreen(userId: author),
                         ));
                       },
