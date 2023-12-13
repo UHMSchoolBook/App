@@ -35,4 +35,64 @@ class GroupDBService {
           .toList();
     });
   }
+  Future<List<GroupData>> searchGroups(String query) async {
+    var querySnapshot = await _firestore.collection('groups')
+        .where('name', isGreaterThanOrEqualTo: query)
+        .where('name', isLessThanOrEqualTo: query + '\uf8ff')
+        .get();
+
+    return querySnapshot.docs
+        .map((doc) => GroupData.fromJson(doc.data()))
+        .toList();
+  }
+
+  Future<void> removeUserFromGroup(String groupId, String userId) async {
+    var querySnapshot = await _firestore.collection('groups')
+        .where('group_id', isEqualTo: groupId)
+        .limit(1)
+        .get();
+
+    if (querySnapshot.docs.isEmpty) {
+      throw Exception("Group not found");
+    }
+
+    DocumentReference groupDocRef = querySnapshot.docs.first.reference;
+
+    return _firestore.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(groupDocRef);
+
+      List<String> studentIds = List<String>.from(snapshot.get('student_ids'));
+      studentIds.remove(userId);
+
+      transaction.update(groupDocRef, {'student_ids': studentIds});
+    });
+  }
+
+
+  Future<void> addUserToGroup(String groupId, String userId) async {
+    var querySnapshot = await _firestore.collection('groups')
+        .where('group_id', isEqualTo: groupId)
+        .limit(1)
+        .get();
+
+    if (querySnapshot.docs.isEmpty) {
+      throw Exception("Group not found");
+    }
+
+    DocumentReference groupDocRef = querySnapshot.docs.first.reference;
+
+    return _firestore.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(groupDocRef);
+
+      List<String> studentIds = List<String>.from(snapshot.get('student_ids'));
+      if (!studentIds.contains(userId)) {
+        studentIds.add(userId);
+      }
+
+      transaction.update(groupDocRef, {'student_ids': studentIds});
+    });
+  }
+
+
+
 }

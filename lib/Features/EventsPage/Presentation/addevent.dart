@@ -7,14 +7,20 @@ import 'package:connect_people/Features/EventsPage/Data/event_provider.dart';
 import 'package:connect_people/Features/Student_Profile_Page/Data/user_notifier.dart';
 
 class AddEvent extends ConsumerWidget {
+  final VoidCallback onEventAdded;
+
+  const AddEvent({Key? key, required this.onEventAdded}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text("Add Event")),
       body: EventForm(
         onSubmit: (Event event) {
-          ref.read(eventProvider.notifier).addEvent(event);
-          Navigator.pop(context, true);
+          ref.read(eventProvider.notifier).addEvent(event).then((_) {
+            onEventAdded(); // Invoke callback after adding event
+            Navigator.pop(context, true);
+          });
         },
       ),
     );
@@ -100,6 +106,12 @@ class _EventFormState extends ConsumerState<EventForm> {// Change to ConsumerSta
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       student_id: currentUserID,
     );
-    widget.onSubmit(event);
+
+    ref.read(eventProvider.notifier).addEvent(event).then((_) {
+      // Trigger a state update or re-fetch events here
+      ref.refresh(eventProvider);
+    });
+
+    Navigator.pop(context);
   }
 }

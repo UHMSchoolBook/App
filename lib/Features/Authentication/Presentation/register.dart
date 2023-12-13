@@ -1,3 +1,4 @@
+import 'package:connect_people/Features/Authentication/Presentation/sign_in_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../Data/authentication_notifier.dart';
@@ -109,7 +110,10 @@ class SignUpViewState extends ConsumerState<SignUpPage> {
                       'bio': _bioController.text,
                     });
 
-                    Navigator.of(context).pushReplacementNamed('/');
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => SigninView()),
+                    );
+
                   }
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));

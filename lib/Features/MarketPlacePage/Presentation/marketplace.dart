@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../MessagesPage/Domain/messages.dart';
+import '../../MessagesPage/Presentation/Messenger.dart';
+import '../../MessagesPage/Presentation/chat_screen.dart';
 import '../../Student_Profile_Page/Domain/users_collection.dart';
 import 'edit_Item.dart';
 import 'edit_housesharing.dart';
@@ -70,6 +73,7 @@ class SaleTab extends ConsumerWidget {
             currentUserId: currentUserID,
             itemId: item.item_id,
             isSaleItem: true,
+
           );
         },
       ),
@@ -98,6 +102,7 @@ class HouseSharingTab extends ConsumerWidget {
             currentUserId: currentUserID,
             itemId: room.item_id,
             isSaleItem: false,
+
           );
         },
       ),
@@ -154,7 +159,23 @@ class MarketplaceItem extends StatelessWidget {
               if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               }
-              return Text('Posted by: ${snapshot.data}');
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  children: [
+                    Text('Posted by: ${snapshot.data}'),
+                    Spacer(),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ChatScreen(userId: author),
+                        ));
+                      },
+                      child: Text('Send a Message'),
+                    ),
+                  ],
+                ),
+              );
             },
           ),
           if (currentUserId == author)

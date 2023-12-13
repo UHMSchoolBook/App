@@ -11,8 +11,8 @@ class GroupDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final refresh = ref.watch(refreshProvider);
     final groupAsyncValue = ref.watch(groupProvider(groupId));
-
     return Scaffold(
       appBar: AppBar(
         title: groupAsyncValue.when(
@@ -31,6 +31,17 @@ class GroupDetailPage extends ConsumerWidget {
   }
 
   Widget buildGroupDetails(BuildContext context, WidgetRef ref, GroupData groupData) {
+    final currentUserID = ref.watch(currentUserIDProvider);
+    final userEmailAsyncValue = ref.watch(userEmailProvider(currentUserID!));
+    final refresh = ref.watch(refreshProvider);
+    return userEmailAsyncValue.when(
+      data: (userEmail) => _buildGroupDetailsWithData(context, ref, groupData, userEmail),
+      loading: () => Center(child: CircularProgressIndicator()),
+      error: (e, st) => Center(child: Text('Error: $e')),
+    );
+  }
+
+  Widget _buildGroupDetailsWithData(BuildContext context, WidgetRef ref, GroupData groupData, String userEmail) {
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(16.0),
@@ -54,6 +65,13 @@ class GroupDetailPage extends ConsumerWidget {
             ),
             SizedBox(height: 10.0),
             _buildStudentList(ref, groupData.student_ids),
+            SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () => isUserMember(groupData.student_ids, userEmail)
+                  ? _leaveGroup(context, ref, groupData, userEmail)
+                  : _joinGroup(context, ref, groupData, userEmail),
+              child: Text(isUserMember(groupData.student_ids, userEmail) ? 'Leave Group' : 'Join Group'),
+            ),
           ],
         ),
       ),
@@ -91,4 +109,48 @@ class GroupDetailPage extends ConsumerWidget {
       },
     );
   }
+  bool isUserMember(List<String> memberIds, String? userId) {
+    if (userId == null) {
+      print("User ID is null");
+      return false;
+    }
+
+    // Debugging: Print values to check
+    print("Checking membership for user ID: $userId");
+    print("Current member IDs: $memberIds");
+
+    return memberIds.contains(userId);
+  }
+
+
+  void _leaveGroup(BuildContext context, WidgetRef ref, GroupData groupData, String? userId) async {
+    if (userId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User ID is null")));
+      return;
+    }
+
+    try {
+      await ref.read(groupDBServiceProvider).removeUserFromGroup(groupData.group_id, userId);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Left the group successfully")));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error leaving group: $e")));
+    }
+    ref.refresh(groupProvider(groupData.group_id));
+  }
+
+  void _joinGroup(BuildContext context, WidgetRef ref, GroupData groupData, String? userId) async {
+    if (userId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User ID is null")));
+      return;
+    }
+
+    try {
+      await ref.read(groupDBServiceProvider).addUserToGroup(groupData.group_id, userId);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Joined the group successfully")));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error joining group: $e")));
+    }
+    ref.refresh(groupProvider(groupData.group_id));
+  }
 }
+

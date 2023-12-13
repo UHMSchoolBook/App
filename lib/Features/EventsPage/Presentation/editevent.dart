@@ -6,8 +6,9 @@ import 'package:connect_people/Features/EventsPage/Domain/events.dart';
 import 'package:connect_people/Features/EventsPage/Data/event_provider.dart';
 class EditEvent extends ConsumerWidget {
   final Event event;
+  final VoidCallback onEventEdited;
 
-  const EditEvent({Key? key, required this.event}) : super(key: key);
+  const EditEvent({Key? key, required this.event, required this.onEventEdited}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -16,8 +17,10 @@ class EditEvent extends ConsumerWidget {
       body: EventForm(
         event: event,
         onSubmit: (updatedEvent) {
-          ref.read(eventProvider.notifier).updateEvent(event.id, updatedEvent);
-          Navigator.pop(context, true);
+          ref.read(eventProvider.notifier).updateEvent(event.id, updatedEvent).then((_) {
+            onEventEdited(); // Invoke callback after editing event
+            Navigator.pop(context, true);
+          });
         },
       ),
     );

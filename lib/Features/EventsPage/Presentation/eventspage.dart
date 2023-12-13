@@ -16,21 +16,21 @@ class EventsPage extends ConsumerWidget {
     return Scaffold(
       body: EventCalendar(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _navigateToAddEvent(context),
+        onPressed: () => _navigateToAddEvent(context, ref),
         child: const Icon(Icons.add),
       ),
     );
   }
 
-  void _navigateToAddEvent(BuildContext context) async {
+  void _navigateToAddEvent(BuildContext context, WidgetRef ref) async {
     final result = await Navigator.push<bool>(
       context,
       MaterialPageRoute(
-        builder: (_) => AddEvent(),
+        builder: (_) => AddEvent(onEventAdded: () => ref.refresh(eventProvider)),
       ),
     );
     if (result ?? false) {
-      // Handle any actions after adding an event
+      ref.refresh(eventProvider); // Refresh events list
     }
   }
 }
@@ -112,7 +112,7 @@ class _EventCalendarState extends State<EventCalendar> {
                         return EventItem(
                           event: event,
                           onDelete: () => eventService.deleteEvent(event.id),
-                          onTap: () => _navigateToEditEvent(context, event),
+                          onTap: () => _navigateToEditEvent(context, event, ref),
                         );
                       },
                     ),
@@ -125,15 +125,18 @@ class _EventCalendarState extends State<EventCalendar> {
     );
   }
 
-  void _navigateToEditEvent(BuildContext context, Event event) async {
+  void _navigateToEditEvent(BuildContext context, Event event, WidgetRef ref) async {
     final result = await Navigator.push<bool>(
       context,
       MaterialPageRoute(
-        builder: (_) => EditEvent(event: event),
+        builder: (_) => EditEvent(
+          event: event,
+          onEventEdited: () => ref.refresh(eventProvider),
+        ),
       ),
     );
     if (result ?? false) {
-      // Handle any actions after editing an event
+      ref.refresh(eventProvider); // Refresh events list
     }
   }
 }
