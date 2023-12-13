@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../ClubPage/Data/groupsProvider.dart';
 import '../../ClubPage/Domain/groups.dart';
+import '../../ClubPage/Presentation/addgroupspage.dart';
 import '../../ClubPage/Presentation/groupspage.dart';
 import '../../Common/bottom_navigation_bar.dart';
 import '../../CoursesPaage/Presentation/coursepage.dart';
@@ -66,7 +67,7 @@ class StudentProfilePage extends ConsumerWidget {
               buildHeaderSection(userData),
               buildBioSection(userData),
               buildCoursesSection(classesAsyncValue),
-              buildGroupsSection(groupsAsyncValue),
+              buildGroupsSection(groupsAsyncValue, ref, context),
             ],
           ),
         );
@@ -144,7 +145,7 @@ class StudentProfilePage extends ConsumerWidget {
     );
   }
 
-  Widget buildGroupsSection(AsyncValue<List<GroupData>> groupsAsyncValue) {
+  Widget buildGroupsSection(AsyncValue<List<GroupData>> groupsAsyncValue, WidgetRef ref, BuildContext context) {
     return groupsAsyncValue.when(
       data: (groups) => Container(
         padding: EdgeInsets.all(16.0),
@@ -158,6 +159,10 @@ class StudentProfilePage extends ConsumerWidget {
             SizedBox(height: 8.0),
             for (var groupData in groups)
               GroupItem(groupData),
+            ElevatedButton(
+              onPressed: () => _navigateToAddGroupsPage(context, ref),
+              child: Text('Add Groups'),
+            ),
           ],
         ),
       ),
@@ -167,8 +172,15 @@ class StudentProfilePage extends ConsumerWidget {
   }
 
 
+  void _navigateToAddGroupsPage(BuildContext context, WidgetRef ref) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddGroupsPage()),
+    );
+  }
 
 }
+
 class CourseItem extends StatelessWidget {
   final ClassData classData;
 
@@ -226,3 +238,5 @@ class GroupItem extends StatelessWidget {
     );
   }
 }
+
+

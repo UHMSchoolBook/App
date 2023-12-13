@@ -17,6 +17,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
+    print("ChatScreen initialized with userId: ${widget.userId}");
     Provider.of<FirebaseProvider>(context, listen: false)
       ..getUserById(widget.userId)
       ..getMessages(widget.userId);
